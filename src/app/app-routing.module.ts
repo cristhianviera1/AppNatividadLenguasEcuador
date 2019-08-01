@@ -12,11 +12,15 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   { path: 'culturas',
-    loadChildren: ()=>import( './culturas/culturas.module').then(m=>m.CulturasPageModule)
+    loadChildren: () => import( './culturas/culturas.module').then(m => m.CulturasPageModule)
   },
   { path: 'recursos',
-    loadChildren: () =>import ('./recursos/recursos.module').then(m=>m.RecursosPageModule)
+    loadChildren: () => import ('./recursos/recursos.module').then(m => m.RecursosPageModule)
+  },
+  { path: 'cultura-descripcion',
+  loadChildren: () => import ('./cultura-descripcion/cultura-descripcion.module').then(m => m.CulturaDescripcionPageModule)
   }
+
 ];
 
 @NgModule({
