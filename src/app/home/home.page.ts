@@ -2,16 +2,11 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import *  as L from 'leaflet';
 import 'leaflet.heat/src/HeatLayer.js';
-<<<<<<< HEAD
 import 'leaflet.timeline'
 import 'timeLineSlider/src/leaflet-timeline-slider.js'
 import { TransferState } from '@angular/platform-browser';
 //import { EADDRNOTAVAIL } from 'constants';
 //import { type } from 'os';
-=======
-import 'leaflet.timeline';
-import 'timeLineSlider/src/leaflet-timeline-slider.js';
->>>>>>> 11701d175fb542b0aa2cdbd6bb7d6442a953d336
 
 @Component({
   selector: 'app-home',
