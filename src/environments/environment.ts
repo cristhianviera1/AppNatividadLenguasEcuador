@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  comunidadesPath: "http://www.google.com"
+  comunidadesPath: "http://www.google.com",
+  API_URL: 'http://127.0.0.1:8000'
 };
 
 /*
