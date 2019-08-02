@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import *  as L from 'leaflet';
 import 'leaflet.heat/src/HeatLayer.js';
-import 'leaflet.timeline'
-import 'timeLineSlider/src/leaflet-timeline-slider.js'
+import 'leaflet.timeline';
+import 'timeLineSlider/src/leaflet-timeline-slider.js';
 
 @Component({
   selector: 'app-home',

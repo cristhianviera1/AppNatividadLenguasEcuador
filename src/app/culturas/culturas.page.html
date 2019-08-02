@@ -5,18 +5,17 @@
 </ion-header>
 
 <ion-content>
-
-  <ion-card>
+    <ion-searchbar placeholder="Buscar..." debounce="500" color="dark"></ion-searchbar> 
+  <ion-card *ngFor="let parroquia of parroquias">
     <ion-item>
       <ion-icon name="pin" slot="start"></ion-icon>
-      <ion-label>Comunidad de Natabuela</ion-label>
+      <ion-label>{{parroquia.nombreParroquia}}</ion-label>
       <ion-button fill="outline" slot="end" onclick="location.href='/cultura-descripcion'" >Mas..</ion-button>
     </ion-item>
-    <img src="../../assets/img/img.jpg" />
-
+    <img src="{{parroquia.imagen}}" />
+    
     <ion-card-content>
-      This is content, without any paragraph or header tags,
-      within an ion-card-content element.
+      {{parroquia.descripcion}}
     </ion-card-content>
   </ion-card>
 
