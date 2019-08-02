@@ -105,7 +105,7 @@ export class HomePage {
     this.map.addControl(controlLenguas);
   }
 
-  actualizarCapa() {
+ /* ctualizarCapa() {
     this.map.on('baselayerchange', function (e) {
       //Se obtiene zoom de la capa a enfocar y se centra con una animación
       var zoom = this.map.getBoundsZoom(this.comunidades[e.name].getBounds());
@@ -137,6 +137,6 @@ export class HomePage {
       map.addLayer(layerGroups[54]);
       generaciones = true
     });
-  }
+  }*/
 
 }
