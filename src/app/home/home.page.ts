@@ -105,7 +105,7 @@ export class HomePage {
           var heatMapPoint = L.heatLayer([[centro[0], centro[1], 0.65]], {
             radius: 55, // default value
             blur: 0, // default value
-            gradient: { 1: 'yellow' } // Values can be set for a scale of 0-1
+           // gradient: { 1: 'yellow' } // Values can be set for a scale of 0-1
           }).addTo(this.map)
         }
       }
@@ -156,6 +156,7 @@ export class HomePage {
     L.control.timelineSlider({
       timelineItems: ["Abuelos", "Padres", "Entrevistados", "Hijos"],
       changeMap: changeGeneration,
+      labelWidth: "82px",
       extraChangeMapParams: { exclamation: "Hello World!" }
     }).addTo(this.map);
   }
