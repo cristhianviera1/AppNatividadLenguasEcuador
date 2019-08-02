@@ -14,17 +14,17 @@ export class AppComponent {
     {
       title: 'Home',
       url: '/home',
-      icon: 'home'
+      icon: 'ios-map'
     },
     {
       title: 'Culturas',
       url: '/culturas',
-      icon: 'list'
+      icon: 'md-bonfire'
     },
     {
       title: 'Recursos',
       url: '/recursos',
-      icon: 'list'
+      icon: 'ios-stats'
     }
   ];
 
