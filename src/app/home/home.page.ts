@@ -17,6 +17,7 @@ export class HomePage {
   comunidades: Array<any>
   lenguas: Array<String>
   camposHeat: Array<String>
+
   constructor(private http: HttpClient) {
     this.comunidades = [];
     this.lenguas = [];
@@ -53,21 +54,7 @@ export class HomePage {
     var sixSignedArea = 3 * twoTimesSignedArea;
     return [cyTimes6SignedArea / sixSignedArea, cxTimes6SignedArea / sixSignedArea];
   }
-  getEcuadorShape() {
-    this.http.get('assets/shapeFiles/ecuador.json').subscribe((json: any) => {
-      var ecuador = L.geoJSON(json, {
-        onEachFeature: function (feature, layer) {
-          layer.on('click', function (e) {
-            //Do something when click on any province
-          })
-        },
-        //change style of provinces
-        style: function (layer) {
-          return { fillOpacity: 0.3, color: '#055', weight: 1 }
-        }
-      }).addTo(this.map);
-    });
-  }
+  
   getComunidadesShape() {
     this.http.get('assets/shapeFiles/ddbb.json').subscribe((json: any) => {
       const tempObjects = [];
@@ -105,7 +92,7 @@ export class HomePage {
           var heatMapPoint = L.heatLayer([[centro[0], centro[1], 0.65]], {
             radius: 55, // default value
             blur: 0, // default value
-            gradient: { 1: 'yellow' } // Values can be set for a scale of 0-1
+           // gradient: { 1: 'yellow' } // Values can be set for a scale of 0-1
           }).addTo(this.map)
         }
       }
@@ -156,9 +143,13 @@ export class HomePage {
     L.control.timelineSlider({
       timelineItems: ["Abuelos", "Padres", "Entrevistados", "Hijos"],
       changeMap: changeGeneration,
+      labelWidth: "82px",
       extraChangeMapParams: { exclamation: "Hello World!" }
     }).addTo(this.map);
   }
+  
+  //Escucha si existen cambios en las capas base para desplegar mapa de calor
+  //onCapaBaseCambio() {
 
  /* ctualizarCapa() {
     this.map.on('baselayerchange', function (e) {
@@ -171,11 +162,12 @@ export class HomePage {
         animate: true,
         duration: 0.6
       });
-      //heatMap(e.name);
     });
+  }
   }*/
 
 
 
+  
 
 }
