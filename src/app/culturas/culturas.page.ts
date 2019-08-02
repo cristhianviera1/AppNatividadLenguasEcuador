@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AplicationServiceService } from './../aplication-service.service';
 import { ParroquiaModel } from './../models/ParroquiaModel';
-import { FilterPipe } from './../pipes/filter.pipe';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -16,7 +17,7 @@ export class CulturasPage implements OnInit {
   url:string = '/parroquia';
   textoBuscar = '';
 
-  constructor(private service: AplicationServiceService) { }
+  constructor(private service: AplicationServiceService, private route: Router) { }
 
   ngOnInit() {
     this.parroquia = new ParroquiaModel();
@@ -38,6 +39,10 @@ export class CulturasPage implements OnInit {
     const texto = event.target.value;
     this.textoBuscar = texto;
     console.log(texto);
+  }
+
+  enviarParametros(parroquia: ParroquiaModel) {
+    this.route.navigate(['/cultura-descripcion', {parroquia: JSON.stringify(parroquia)}])
   }
 
 }
