@@ -14,17 +14,25 @@ export class AppComponent {
     {
       title: 'Home',
       url: '/home',
-      icon: 'home'
+      icon: 'ios-map'
     },
     {
       title: 'Culturas',
       url: '/culturas',
+<<<<<<< HEAD
       icon: 'bonfire'
+=======
+      icon: 'md-bonfire'
+>>>>>>> ba2cb5d734b787af1f60ca91f311565feeeafc4d
     },
     {
       title: 'Recursos',
       url: '/recursos',
+<<<<<<< HEAD
       icon: 'clipboard'
+=======
+      icon: 'ios-stats'
+>>>>>>> ba2cb5d734b787af1f60ca91f311565feeeafc4d
     }
   ];
 

@@ -70,8 +70,37 @@
   /** light **/
   --ion-color-light: #f4f5f8;
   --ion-color-light-rgb: 244, 244, 244;
-  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast: #858dff15;
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+  
+    --ion-background-color: #3a55ec31;
+    --ion-background-color-rgb: 23, 23, 23;
+  
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255, 255, 255;
+  
+    --ion-item-background: rgba(7, 5, 134, 0.356);
+    --ion-item-background-activated: #ff000025;
+
+    --ion-menu-background: url(../assets/img/menuFondo.jpg);
+  
+    --ion-item-border-color: #051b35;
+  
+  ion-toolbar {
+    --background: linear-gradient(162deg, rgba(233, 230, 21, 0) 20%, rgba(34, 36, 172, 0) 100%), url('../assets/img/red-and-purple-wallpaper.png') bottom no-repeat;
+}
+
+
+ion-item {
+  --ripple-color: transparent;
+
+  --background-activated: var(--ion-item-background-activated);
+}
+
+ion-menu{
+  --background: var(--ion-menu-background);
+}
+
 }
