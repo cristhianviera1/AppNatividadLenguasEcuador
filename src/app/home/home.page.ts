@@ -102,9 +102,11 @@ export class HomePage {
     for (let c in this.comunidades) {
       var centro = this.getCentro(this.comunidades[c].geometry.coordinates[0][0]);
       //console.log (centro);
-      var heatMapPoint = L.heatLayer([
-        [centro[0],centro[1],  0.65]
-      ], { radius: 75 }).addTo(this.map)
+      var heatMapPoint = L.heatLayer([[centro[0], centro[1], 0.65]], {
+        radius: 25, // default value
+        blur: 10, // default value
+        gradient: { 1: 'red' } // Values can be set for a scale of 0-1
+      }).addTo(this.map)
     }
   }
 
