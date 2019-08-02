@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AplicationServiceService } from './../aplication-service.service';
 import { ParroquiaModel } from './../models/ParroquiaModel';
+import { FilterPipe } from './../pipes/filter.pipe';
 
 
 @Component({
@@ -13,6 +14,7 @@ export class CulturasPage implements OnInit {
   parroquia: ParroquiaModel;
   parroquias: Array<ParroquiaModel>;
   url:string = '/parroquia';
+  textoBuscar = '';
 
   constructor(private service: AplicationServiceService) { }
 
@@ -30,6 +32,12 @@ export class CulturasPage implements OnInit {
       },
       error => {console.log(error)}
     );
+  }
+
+  buscarParroquia(event) {
+    const texto = event.target.value;
+    this.textoBuscar = texto;
+    console.log(texto);
   }
 
 }

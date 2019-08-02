@@ -5,8 +5,8 @@
 </ion-header>
 
 <ion-content>
-    <ion-searchbar placeholder="Buscar..." debounce="500" color="dark"></ion-searchbar> 
-  <ion-card *ngFor="let parroquia of parroquias">
+    <ion-searchbar placeholder="Buscar..." color="dark" (ionChange)="buscarParroquia($event)"></ion-searchbar> 
+  <ion-card *ngFor="let parroquia of parroquias | filter:textoBuscar">
     <ion-item>
       <ion-icon name="pin" slot="start"></ion-icon>
       <ion-label>{{parroquia.nombreParroquia}}</ion-label>
