@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { CulturasPage } from './culturas.page';
 import { PipesModule } from '../pipes/pipes.module';
+import { TruncateModule } from 'ng2-truncate';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    TruncateModule,
     PipesModule,
     CommonModule,
     FormsModule,
