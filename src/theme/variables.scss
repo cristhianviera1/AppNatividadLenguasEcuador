@@ -74,4 +74,10 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+  ion-toolbar {
+    --background: linear-gradient(162deg, rgba(233, 230, 21, 0) 20%, rgba(34, 36, 172, 0) 100%), url('../assets/img/red-and-purple-wallpaper.png') bottom no-repeat;
+}
+ion-menu-toggle {
+  --background: url('../assets/img/red-and-purple-wallpaper.png') bottom no-repeat;
+}
 }
