@@ -11,10 +11,10 @@ export class AplicationServiceService {
   constructor(private http: HttpClient) { }
 
   get(url: string) {
-    return this.http.get(environment.API_URL + url);
+    return this.http.get(environment.API_URL+url);
   }
   post(url: string, data: any) {
-    return this.http.post(environment.API_URL + url, data);
+    return this.http.post(environment.API_URL+url, data);
   }
   put(url: string, data: any) {
     return this.http.put(environment.API_URL+url,data);

@@ -2,8 +2,16 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import *  as L from 'leaflet';
 import 'leaflet.heat/src/HeatLayer.js';
+<<<<<<< HEAD
 import 'leaflet.timeline'
 import 'timeLineSlider/src/leaflet-timeline-slider.js'
+import { TransferState } from '@angular/platform-browser';
+//import { EADDRNOTAVAIL } from 'constants';
+//import { type } from 'os';
+=======
+import 'leaflet.timeline';
+import 'timeLineSlider/src/leaflet-timeline-slider.js';
+>>>>>>> 11701d175fb542b0aa2cdbd6bb7d6442a953d336
 
 @Component({
   selector: 'app-home',
@@ -13,7 +21,7 @@ import 'timeLineSlider/src/leaflet-timeline-slider.js'
 export class HomePage {
   lenguasLayer = ['Sus abuelos', 'Sus padres', 'Los entrevistados', 'Sus hijos'];
 
-  map: L.Map;
+  public map: L.Map;
   comunidades: Array<any>
   lenguas: Array<String>
   camposHeat: Array<String>
@@ -25,6 +33,7 @@ export class HomePage {
   ionViewDidEnter() {
     this.loadmap();
     this.getComunidadesShape();
+    this.actualizarCapa();
   }
 
   loadmap() {
@@ -54,7 +63,7 @@ export class HomePage {
     var sixSignedArea = 3 * twoTimesSignedArea;
     return [cyTimes6SignedArea / sixSignedArea, cxTimes6SignedArea / sixSignedArea];
   }
-  
+
   getComunidadesShape() {
     this.http.get('assets/shapeFiles/ddbb.json').subscribe((json: any) => {
       const tempObjects = [];
@@ -66,38 +75,35 @@ export class HomePage {
             tempLeng.push(feature.properties.LENGUA_L1)
           }
         },
-        style: function (layer) {
-          //return { fillOpacity: 0.8, color: '#555' }
-        }
       });
       this.map.fitBounds(comunidad.getBounds());
       this.comunidades = tempObjects;
       this.lenguas = tempLeng;
       this.getLanguages(this.lenguas);
-      //console.log(this.comunidades);
     })
   }
 
 
   heatMapLayer(lenguaLayer) {
+    return alert(lenguaLayer);
     var heatLayers = {};
-
+    alert("prros");
     for (let leng in lenguaLayer) {
       for (let c in this.comunidades) {
         heatLayers[lenguaLayer[leng]] = []
-        if (lenguaLayer[leng].toString() === this.comunidades[c].properties.LENGUA_L1.toString()) {
-          console.log("Existe");
+        if (this.lenguas[lenguaLayer].toString() === this.comunidades[c].properties.LENGUA_L1.toString()) {
+          //console.log("Existe");
           heatLayers[lenguaLayer[leng]].push(this.comunidades[c])
           var centro = this.getCentro(this.comunidades[c].geometry.coordinates[0][0]);
           var heatMapPoint = L.heatLayer([[centro[0], centro[1], 0.65]], {
             radius: 55, // default value
             blur: 0, // default value
-           // gradient: { 1: 'yellow' } // Values can be set for a scale of 0-1
+            // gradient: { 1: 'yellow' } // Values can be set for a scale of 0-1
           }).addTo(this.map)
         }
       }
     }
-    console.log(heatLayers);
+    //console.log(heatLayers);
   }
 
 
@@ -136,38 +142,25 @@ export class HomePage {
     })
 
     function changeGeneration({ label, value, map }) {
-
-      console.log(label+"-"+value+"-"+map);
+      //console.log(label + "-" + value + "-" + map);
     }
     this.map.addControl(controlLenguas);
     L.control.timelineSlider({
       timelineItems: ["Abuelos", "Padres", "Entrevistados", "Hijos"],
       changeMap: changeGeneration,
-      labelWidth: "82px",
+      //labelWidth: "82px",
       extraChangeMapParams: { exclamation: "Hello World!" }
     }).addTo(this.map);
   }
-  
+
   //Escucha si existen cambios en las capas base para desplegar mapa de calor
   //onCapaBaseCambio() {
 
- /* ctualizarCapa() {
-    this.map.on('baselayerchange', function (e) {
-      //Se obtiene zoom de la capa a enfocar y se centra con una animación
-      var zoom = this.map.getBoundsZoom(this.lengs[e.name].getBounds());
-      var posicion = this.lengs[e.name].getBounds()
-      var lat = (posicion._northEast.lat + posicion._southWest.lat) / 2
-      var lng = (posicion._northEast.lng + posicion._southWest.lng) / 2
-      this.map.flyTo([lat, lng], zoom, {
-        animate: true,
-        duration: 0.6
-      });
-    });
+  actualizarCapa() {
+    var response = this.map.on('baselayerchange', function (e) { alert("asd");return e.name })
+    
+    return response;
   }
-  }*/
-
-
-
-  
-
 }
+
+
