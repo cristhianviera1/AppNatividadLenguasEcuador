@@ -31,6 +31,7 @@
     "leaflet.heat": "^0.2.0",
     "leaflet.timeline": "^1.2.1",
     "rxjs": "~6.5.1",
+    "simpleheat": "^0.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },

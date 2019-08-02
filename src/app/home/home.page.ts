@@ -2,16 +2,12 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import *  as L from 'leaflet';
 import 'leaflet.heat/src/HeatLayer.js';
-<<<<<<< HEAD
 import 'leaflet.timeline'
 import 'timeLineSlider/src/leaflet-timeline-slider.js'
+
 import { TransferState } from '@angular/platform-browser';
 //import { EADDRNOTAVAIL } from 'constants';
 //import { type } from 'os';
-=======
-import 'leaflet.timeline';
-import 'timeLineSlider/src/leaflet-timeline-slider.js';
->>>>>>> 11701d175fb542b0aa2cdbd6bb7d6442a953d336
 
 @Component({
   selector: 'app-home',
@@ -25,6 +21,8 @@ export class HomePage {
   comunidades: Array<any>
   lenguas: Array<String>
   camposHeat: Array<String>
+  heatLayers: any;
+  preguntasForm = ['52', '53', '54', '55'];
 
   constructor(private http: HttpClient) {
     this.comunidades = [];
@@ -33,11 +31,11 @@ export class HomePage {
   ionViewDidEnter() {
     this.loadmap();
     this.getComunidadesShape();
-    this.actualizarCapa();
+    //this.actualizarCapa();
   }
 
   loadmap() {
-    this.map = new L.Map('map').fitWorld();
+    this.map = new L.Map('map');
     var OpenStreetMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
       maxZoom: 18,
@@ -80,31 +78,33 @@ export class HomePage {
       this.comunidades = tempObjects;
       this.lenguas = tempLeng;
       this.getLanguages(this.lenguas);
+      this.heatMapLayer("Kichwa", '52')
     })
   }
 
 
-  heatMapLayer(lenguaLayer) {
-    return alert(lenguaLayer);
-    var heatLayers = {};
-    alert("prros");
-    for (let leng in lenguaLayer) {
+  heatMapLayer(lenguaLayer, numForm) {
+    this.heatLayers = {};
+    for (let num in this.preguntasForm) {
+      this.heatLayers[num] = L.layerGroup();
       for (let c in this.comunidades) {
-        heatLayers[lenguaLayer[leng]] = []
-        if (this.lenguas[lenguaLayer].toString() === this.comunidades[c].properties.LENGUA_L1.toString()) {
-          //console.log("Existe");
-          heatLayers[lenguaLayer[leng]].push(this.comunidades[c])
+        if (lenguaLayer === this.comunidades[c].properties.LENGUA_L1) {
+          var L1 = parseInt(this.comunidades[c].properties.L1_52);
+          var cast = parseInt(this.comunidades[c].properties.CAST_52);
+          var Bili = parseInt(this.comunidades[c].properties.BILI_52);
+          var otra = parseInt(this.comunidades[c].properties.OTRA_52);
+          var nr = parseInt(this.comunidades[c].properties.NR_52);
+          var total = L1 + cast + Bili + otra + nr;
+          var result = 1 * (L1 + Bili) / total
           var centro = this.getCentro(this.comunidades[c].geometry.coordinates[0][0]);
-          var heatMapPoint = L.heatLayer([[centro[0], centro[1], 0.65]], {
-            radius: 55, // default value
-            blur: 0, // default value
-            // gradient: { 1: 'yellow' } // Values can be set for a scale of 0-1
-          }).addTo(this.map)
+          this.heatLayers[num].addLayer(L.heatLayer([[centro[0], centro[1], result]]))
         }
       }
     }
-    //console.log(heatLayers);
+    return this.heatLayers;
   }
+
+
 
 
   //Dibujamos un control con las lenguas principales 
@@ -140,27 +140,38 @@ export class HomePage {
     var controlLenguas = L.control.layers(lenguas, null, {
       collapsed: true,
     })
-
-    function changeGeneration({ label, value, map }) {
-      //console.log(label + "-" + value + "-" + map);
-    }
     this.map.addControl(controlLenguas);
+
     L.control.timelineSlider({
       timelineItems: ["Abuelos", "Padres", "Entrevistados", "Hijos"],
-      changeMap: changeGeneration,
-      //labelWidth: "82px",
+      changeMap: this.changeGeneration,
       extraChangeMapParams: { exclamation: "Hello World!" }
     }).addTo(this.map);
   }
 
-  //Escucha si existen cambios en las capas base para desplegar mapa de calor
-  //onCapaBaseCambio() {
-
   actualizarCapa() {
-    var response = this.map.on('baselayerchange', function (e) { alert("asd");return e.name })
-    
-    return response;
+    var response = this.map.on('baselayerchange', function (e) { return e.name })
   }
-}
 
+  changeGeneration(label) {
+    this.heatMapLayer('Kichwa', 55);
+    if (label.label == "Abuelos") {
+      alert('1')
+      this.heatLayers[0].addTo(this.map);
+    } else if (label.label == "Padres") {
+      this.map
+      
+    } else if (label.label == "Entrevistados") {
+      alert('3')
+      
+    } else if (label.label == "Hijos") {
+      alert('4')
+     
+    }
+  }
+
+  //
+
+
+}
 
