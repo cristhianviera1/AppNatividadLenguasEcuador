@@ -8,42 +8,14 @@
     <ion-searchbar placeholder="Buscar..." color="dark" (ionChange)="buscarParroquia($event)"></ion-searchbar> 
   <ion-card *ngFor="let parroquia of parroquias | filter:textoBuscar">
     <ion-item>
-      <ion-icon name="pin" slot="start"></ion-icon>
+      <ion-icon name="logo-freebsd-devil" slot="start"></ion-icon>
       <ion-label>{{parroquia.nombreParroquia}}</ion-label>
-      <ion-button fill="outline" slot="end" onclick="location.href='/cultura-descripcion'" >Mas..</ion-button>
+      <ion-button fill="outline" slot="end" (click)="enviarParametros(parroquia)" >Mas..</ion-button>
     </ion-item>
     <img src="{{parroquia.imagen}}" />
     
     <ion-card-content>
       {{parroquia.descripcion}}
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-item>
-      <ion-icon name="pin" slot="start"></ion-icon>
-      <ion-label>Tshachilas</ion-label>
-      <ion-button fill="outline" slot="end">Mas..</ion-button>
-    </ion-item>
-    <img src="../../assets/img/img1.png" />
-
-    <ion-card-content>
-      This is content, without any paragraph or header tags,
-      within an ion-card-content element.
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-item>
-      <ion-icon name="pin" slot="start"></ion-icon>
-      <ion-label>La Diablada</ion-label>
-      <ion-button fill="outline" slot="end">Mas..</ion-button>
-    </ion-item>
-    <img src="../../assets/img/img2.jpg" />
-
-    <ion-card-content>
-      This is content, without any paragraph or header tags,
-      within an ion-card-content element.
     </ion-card-content>
   </ion-card>
 

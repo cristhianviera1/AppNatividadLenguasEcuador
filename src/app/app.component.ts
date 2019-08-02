@@ -19,12 +19,12 @@ export class AppComponent {
     {
       title: 'Culturas',
       url: '/culturas',
-      icon: 'list'
+      icon: 'bonfire'
     },
     {
       title: 'Recursos',
       url: '/recursos',
-      icon: 'list'
+      icon: 'clipboard'
     }
   ];
 
