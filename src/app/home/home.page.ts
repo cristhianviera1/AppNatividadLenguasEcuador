@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import *  as L from 'leaflet';
 import 'leaflet.heat/src/HeatLayer.js';
+import 'leaflet.timeline'
+import 'timeLineSlider/src/leaflet-timeline-slider.js'
 
 @Component({
   selector: 'app-home',
@@ -21,14 +23,7 @@ export class HomePage {
   }
   ionViewDidEnter() {
     this.loadmap();
-    //this.heatMapLayer();
     this.getComunidadesShape();
-    this.getEcuadorShape();
-
-    //this.getEcuadorShape();
-    //this.getComunidadesShape();
-    //this.onCapaBaseCambio();
-
   }
 
   loadmap() {
@@ -87,25 +82,35 @@ export class HomePage {
         style: function (layer) {
           //return { fillOpacity: 0.8, color: '#555' }
         }
-      }).addTo(this.map);
+      });
       this.map.fitBounds(comunidad.getBounds());
       this.comunidades = tempObjects;
       this.lenguas = tempLeng;
       this.getLanguages(this.lenguas);
-      console.log(this.comunidades);
+      //console.log(this.comunidades);
     })
   }
 
 
   heatMapLayer(lenguaLayer) {
-    //var heatLayers = {};
-    for (let c in this.comunidades) {
-      var centro = this.getCentro(this.comunidades[c].geometry.coordinates[0][0]);
-      //console.log (centro);
-      var heatMapPoint = L.heatLayer([
-        [centro[0],centro[1],  0.65]
-      ], { radius: 75 }).addTo(this.map)
+    var heatLayers = {};
+
+    for (let leng in lenguaLayer) {
+      for (let c in this.comunidades) {
+        heatLayers[lenguaLayer[leng]] = []
+        if (lenguaLayer[leng].toString() === this.comunidades[c].properties.LENGUA_L1.toString()) {
+          console.log("Existe");
+          heatLayers[lenguaLayer[leng]].push(this.comunidades[c])
+          var centro = this.getCentro(this.comunidades[c].geometry.coordinates[0][0]);
+          var heatMapPoint = L.heatLayer([[centro[0], centro[1], 0.65]], {
+            radius: 55, // default value
+            blur: 0, // default value
+            gradient: { 1: 'yellow' } // Values can be set for a scale of 0-1
+          }).addTo(this.map)
+        }
+      }
     }
+    console.log(heatLayers);
   }
 
 
@@ -140,15 +145,19 @@ export class HomePage {
       });
     }
     var controlLenguas = L.control.layers(lenguas, null, {
-      collapsed: false,
+      collapsed: true,
     })
+
+    function changeGeneration({ label, value, map }) {
+
+      console.log(label+"-"+value+"-"+map);
+    }
     this.map.addControl(controlLenguas);
-    this.heatMapLayer(this.lenguas)
-    /*L.TimelineSliderControl({
-      timelineItems: ["Day 1", "The Next Day", "Amazing Event", "1776", "12/22/63", "1984"],
-      extraChangeMapParams: {greeting: "Hello World!"}, 
-      /*changeMap: changeMapFunction })
-  .addTo(this.map);*/
+    L.control.timelineSlider({
+      timelineItems: ["Abuelos", "Padres", "Entrevistados", "Hijos"],
+      changeMap: changeGeneration,
+      extraChangeMapParams: { exclamation: "Hello World!" }
+    }).addTo(this.map);
   }
 
  /* ctualizarCapa() {
