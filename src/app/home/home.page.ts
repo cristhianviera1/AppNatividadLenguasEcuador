@@ -2,33 +2,61 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import *  as L from 'leaflet';
 import 'leaflet.heat/src/HeatLayer.js';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  lenguasLayer = ['Sus abuelos', 'Sus padres', 'Los entrevistados', 'Sus hijos'];
+
   map: L.Map;
   comunidades: Array<any>
+  lenguas: Array<String>
+  camposHeat: Array<String>
   constructor(private http: HttpClient) {
     this.comunidades = [];
+    this.lenguas = [];
   }
   ionViewDidEnter() {
     this.loadmap();
-    this.getEcuadorShape();
+    //this.heatMapLayer();
     this.getComunidadesShape();
+    this.getEcuadorShape();
+
+    //this.getEcuadorShape();
+    //this.getComunidadesShape();
+    //this.onCapaBaseCambio();
 
   }
 
   loadmap() {
-    this.map = new L.Map('map');
+    this.map = new L.Map('map').fitWorld();
     var OpenStreetMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
       maxZoom: 18,
       layers: [OpenStreetMap]
     }).addTo(this.map);
+  }
+  //Función para obtener el centro de un polífgono
+  getCentro(arr) {
+    var twoTimesSignedArea = 0;
+    var cxTimes6SignedArea = 0;
+    var cyTimes6SignedArea = 0;
+    var length = arr.length
 
+    var x = function (i) { return arr[i % length][0] };
+    var y = function (i) { return arr[i % length][1] };
 
+    for (var i = 0; i < arr.length; i++) {
+      var twoSA = x(i) * y(i + 1) - x(i + 1) * y(i);
+      twoTimesSignedArea += twoSA;
+      cxTimes6SignedArea += (x(i) + x(i + 1)) * twoSA;
+      cyTimes6SignedArea += (y(i) + y(i + 1)) * twoSA;
+    }
+    var sixSignedArea = 3 * twoTimesSignedArea;
+    return [cyTimes6SignedArea / sixSignedArea, cxTimes6SignedArea / sixSignedArea];
   }
   getEcuadorShape() {
     this.http.get('assets/shapeFiles/ecuador.json').subscribe((json: any) => {
@@ -57,13 +85,27 @@ export class HomePage {
           }
         },
         style: function (layer) {
-          return { fillOpacity: 0.8, color: '#555' }
+          //return { fillOpacity: 0.8, color: '#555' }
         }
       }).addTo(this.map);
       this.map.fitBounds(comunidad.getBounds());
       this.comunidades = tempObjects;
-      this.getLanguages(tempLeng);
+      this.lenguas = tempLeng;
+      this.getLanguages(this.lenguas);
+      console.log(this.comunidades);
     })
+  }
+
+
+  heatMapLayer(lenguaLayer) {
+    //var heatLayers = {};
+    for (let c in this.comunidades) {
+      var centro = this.getCentro(this.comunidades[c].geometry.coordinates[0][0]);
+      //console.log (centro);
+      var heatMapPoint = L.heatLayer([
+        [centro[0],centro[1],  0.65]
+      ], { radius: 75 }).addTo(this.map)
+    }
   }
 
 
@@ -96,47 +138,35 @@ export class HomePage {
           }
         }
       });
-      //baseLayers[overlay[i]].setStyle({'className':'parroquias'});
     }
-    //console.log(lenguas);
     var controlLenguas = L.control.layers(lenguas, null, {
       collapsed: false,
     })
     this.map.addControl(controlLenguas);
+    this.heatMapLayer(this.lenguas)
+    /*L.TimelineSliderControl({
+      timelineItems: ["Day 1", "The Next Day", "Amazing Event", "1776", "12/22/63", "1984"],
+      extraChangeMapParams: {greeting: "Hello World!"}, 
+      /*changeMap: changeMapFunction })
+  .addTo(this.map);*/
   }
 
  /* ctualizarCapa() {
     this.map.on('baselayerchange', function (e) {
       //Se obtiene zoom de la capa a enfocar y se centra con una animación
-      var zoom = this.map.getBoundsZoom(this.comunidades[e.name].getBounds());
-      var posicion = baseLayers[e.name].getBounds()
+      var zoom = this.map.getBoundsZoom(this.lengs[e.name].getBounds());
+      var posicion = this.lengs[e.name].getBounds()
       var lat = (posicion._northEast.lat + posicion._southWest.lat) / 2
       var lng = (posicion._northEast.lng + posicion._southWest.lng) / 2
-      map.flyTo([lat, lng], zoom, {
+      this.map.flyTo([lat, lng], zoom, {
         animate: true,
         duration: 0.6
       });
-      //map.fitBounds(baseLayers[e.name].getBounds());
-      for (a in pastelesPrueba) {
-        if (map.hasLayer(layerGroups[a])) {
-          map.removeLayer(layerGroups[a]);
-        }
-      }
-      if (pastelControlInstanciado) {
-        for (layer in lengs.Usuarios) {
-          if (map.hasLayer(lengs.Usuarios[layer])) {
-            map.removeLayer(lengs.Usuarios[layer]);
-          }
-        }
-      }
-      $("#leyenda").removeClass('hide');
-      $("#LN1").text(e.name);
-      lenguaControl.collapse();
-      preguntar(e.name);
-      $(".leaflet-control-layers").css({ 'border-bottom': 'black 1px solid' });
-      map.addLayer(layerGroups[54]);
-      generaciones = true
+      //heatMap(e.name);
     });
   }*/
+
+
+
 
 }
