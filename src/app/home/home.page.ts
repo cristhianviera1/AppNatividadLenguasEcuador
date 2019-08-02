@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import * as L from 'leaflet';
+import *  as L from 'leaflet';
+import 'leaflet.heat/src/HeatLayer.js';
 
 @Component({
   selector: 'app-home',
@@ -8,23 +9,54 @@ import * as L from 'leaflet';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  lenguasLayer = ['Sus abuelos', 'Sus padres', 'Los entrevistados', 'Sus hijos'];
+
   map: L.Map;
-  lenguas: Array<string>
   comunidades: Array<any>
-  constructor(private http: HttpClient) { }
+  lenguas: Array<String>
+  camposHeat: Array<String>
+  constructor(private http: HttpClient) {
+    this.comunidades = [];
+    this.lenguas = [];
+  }
   ionViewDidEnter() {
     this.loadmap();
-    this.getEcuadorShape();
+    //this.heatMapLayer();
     this.getComunidadesShape();
+    this.getEcuadorShape();
+
+    //this.getEcuadorShape();
+    //this.getComunidadesShape();
+    //this.onCapaBaseCambio();
+
   }
 
   loadmap() {
     this.map = new L.Map('map').fitWorld();
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      // tslint:disable-next-line
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 18
+    var OpenStreetMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+      maxZoom: 18,
+      layers: [OpenStreetMap]
     }).addTo(this.map);
+  }
+  //Función para obtener el centro de un polífgono
+  getCentro(arr) {
+    var twoTimesSignedArea = 0;
+    var cxTimes6SignedArea = 0;
+    var cyTimes6SignedArea = 0;
+    var length = arr.length
+
+    var x = function (i) { return arr[i % length][0] };
+    var y = function (i) { return arr[i % length][1] };
+
+    for (var i = 0; i < arr.length; i++) {
+      var twoSA = x(i) * y(i + 1) - x(i + 1) * y(i);
+      twoTimesSignedArea += twoSA;
+      cxTimes6SignedArea += (x(i) + x(i + 1)) * twoSA;
+      cyTimes6SignedArea += (y(i) + y(i + 1)) * twoSA;
+    }
+    var sixSignedArea = 3 * twoTimesSignedArea;
+    return [cyTimes6SignedArea / sixSignedArea, cxTimes6SignedArea / sixSignedArea];
   }
   getEcuadorShape() {
     this.http.get('assets/shapeFiles/ecuador.json').subscribe((json: any) => {
@@ -39,25 +71,105 @@ export class HomePage {
           return { fillOpacity: 0.3, color: '#055', weight: 1 }
         }
       }).addTo(this.map);
-      this.map.fitBounds(ecuador.getBounds());
     });
   }
   getComunidadesShape() {
     this.http.get('assets/shapeFiles/ddbb.json').subscribe((json: any) => {
-      L.geoJson(json, {
+      const tempObjects = [];
+      const tempLeng = [];
+      var comunidad = L.geoJson(json, {
         onEachFeature: function (feature) {
-          //.push(feature);
-          //console.log(this.comunidades)
-          /*
-        if (this.lenguas.indexOf(feature.properties.LENGUA_L1) === -1) {
-            this.lenguas.push(feature.properties.LENGUA_L1)
-        }*/
+          tempObjects.push(feature);
+          if (tempLeng.indexOf(feature.properties.LENGUA_L1) === -1) {
+            tempLeng.push(feature.properties.LENGUA_L1)
+          }
         },
         style: function (layer) {
-          return { fillOpacity: 0.8, color: '#555' }
+          //return { fillOpacity: 0.8, color: '#555' }
         }
-      })
+      }).addTo(this.map);
+      this.map.fitBounds(comunidad.getBounds());
+      this.comunidades = tempObjects;
+      this.lenguas = tempLeng;
+      this.getLanguages(this.lenguas);
+      console.log(this.comunidades);
     })
   }
+
+
+  heatMapLayer(lenguaLayer) {
+    //var heatLayers = {};
+    for (let c in this.comunidades) {
+      var centro = this.getCentro(this.comunidades[c].geometry.coordinates[0][0]);
+      //console.log (centro);
+      var heatMapPoint = L.heatLayer([[centro[0], centro[1], 0.65]], {
+        radius: 25, // default value
+        blur: 10, // default value
+        gradient: { 1: 'red' } // Values can be set for a scale of 0-1
+      }).addTo(this.map)
+    }
+  }
+
+
+  //Dibujamos un control con las lenguas principales 
+  getLanguages(lengs) {
+    var lenguas = {
+    }
+    for (var i = 0; i < lengs.length; i++) {
+      lenguas[lengs[i]] = []
+      for (var j = 0; j < this.comunidades.length; j++) {
+        if (this.comunidades[j].properties.LENGUA_L1 == lengs[i]) {
+          lenguas[lengs[i]].push(this.comunidades[j])
+        }
+      }
+      lenguas[lengs[i]] = L.geoJson(lenguas[lengs[i]], {
+        onEachFeature: function (feature, featureLayer) {
+          featureLayer.bindPopup(feature.properties.PARROQUIA);
+          featureLayer.on('mouseover', function (e) {
+            this.openPopup();
+          });
+          featureLayer.on('mouseout', function (e) {
+            this.closePopup();
+          });
+        },
+        style: function (layer) {
+          return {
+            fillOpacity: 0.6,
+            color: '#fff',
+            weight: 2,
+          }
+        }
+      });
+    }
+    var controlLenguas = L.control.layers(lenguas, null, {
+      collapsed: false,
+    })
+    this.map.addControl(controlLenguas);
+    this.heatMapLayer(this.lenguas)
+    /*L.TimelineSliderControl({
+      timelineItems: ["Day 1", "The Next Day", "Amazing Event", "1776", "12/22/63", "1984"],
+      extraChangeMapParams: {greeting: "Hello World!"}, 
+      /*changeMap: changeMapFunction })
+  .addTo(this.map);*/
+  }
+
+  //Escucha si existen cambios en las capas base para desplegar mapa de calor
+  onCapaBaseCambio() {
+    this.map.on('baselayerchange', function (e) {
+      //Se obtiene zoom de la capa a enfocar y se centra con una animación
+      var zoom = this.map.getBoundsZoom(this.lengs[e.name].getBounds());
+      var posicion = this.lengs[e.name].getBounds()
+      var lat = (posicion._northEast.lat + posicion._southWest.lat) / 2
+      var lng = (posicion._northEast.lng + posicion._southWest.lng) / 2
+      this.map.flyTo([lat, lng], zoom, {
+        animate: true,
+        duration: 0.6
+      });
+      //heatMap(e.name);
+    });
+  }
+
+
+
 
 }
