@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AplicationServiceService } from './../aplication-service.service';
-import { ParroquiaModel } from './../models/ParroquiaModel';
 import { Router } from '@angular/router';
+import { DataApiService } from './../services/data-api.service';
 
 
 
@@ -12,37 +11,32 @@ import { Router } from '@angular/router';
 })
 export class CulturasPage implements OnInit {
 
-  parroquia: ParroquiaModel;
-  parroquias: Array<ParroquiaModel>;
-  url:string = '/parroquia';
   textoBuscar = '';
+  public culturas = [];
+  public cultura = '';
 
-  constructor(private service: AplicationServiceService, private route: Router) { }
+  constructor(private ApiService: DataApiService, private route: Router) { }
 
   ngOnInit() {
-    this.parroquia = new ParroquiaModel();
-    this.parroquias = new Array<ParroquiaModel>();
-    this.getParroquia();
+    this.ApiService.getAllCulturas().subscribe(culturas => {
+      console.log('Culturas', culturas);
+      this.culturas = culturas;
+    })
+
   }
 
-  getParroquia() {
-    this.service.get(this.url).subscribe(
-      response => {
-        this.parroquias = response['parroquia'];
-        console.log(this.parroquias);
-      },
-      error => {console.log(error)}
-    );
-  }
 
+
+  /*
   buscarParroquia(event) {
     const texto = event.target.value;
     this.textoBuscar = texto;
     console.log(texto);
   }
-
-  enviarParametros(parroquia: ParroquiaModel) {
+  */
+  /*enviarParametros(parroquia: ParroquiaModel) {
     this.route.navigate(['/cultura-descripcion', {parroquia: JSON.stringify(parroquia)}])
   }
+  */
 
 }

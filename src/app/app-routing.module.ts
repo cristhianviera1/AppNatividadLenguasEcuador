@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   { path: 'cultura-descripcion',
   loadChildren: () => import ('./cultura-descripcion/cultura-descripcion.module').then(m => m.CulturaDescripcionPageModule)
-  },  { path: 'login', loadChildren: './login/login.module#LoginPageModule' }
+  }
 
 
 ];
