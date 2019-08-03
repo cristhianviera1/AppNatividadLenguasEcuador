@@ -7,7 +7,7 @@ import * as Chart from 'chart.js';
   styleUrls: ['./recursos.page.scss'],
 })
 export class RecursosPage implements OnInit {
-  @ViewChild("barCanvas") barCanvas: ElementRef;
+  @ViewChild('barCanvas', null) barCanvas: ElementRef;
 
   private barChart: Chart;
 
