@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   comunidadesPath: "http://www.google.com",
-  API_URL: 'http://192.168.100.149:8000'
+  API_URL: "http://192.168.100.149:8000"
 };
 
 /*
