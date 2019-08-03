@@ -26,6 +26,7 @@ export class AppComponent {
       url: '/recursos',
       icon: 'ios-stats'
     }
+    
   ];
 
   constructor(
