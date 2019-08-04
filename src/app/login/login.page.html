@@ -5,25 +5,33 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="myForm">
+  <ion-card>
     <img class="iconLogin" src="../../assets/img/iconLogin.png">
-    <ion-item>
-      <ion-label position="floating">Correo Electrónico</ion-label>
-      <ion-input type="text" maxlength="100" [(ngModel)]="email" required formControlName="email"></ion-input>
-    </ion-item>
-    <ion-item *ngIf="myForm.get('email').errors && myForm.get('email').dirty">
-      <span color="danger" ion-text >Por favor ingrese un correo válido</span>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input [(ngModel)]="password" type="password" id="password" formControlName="password"></ion-input>
-    </ion-item>
-    <br>
-    <a (click)="registro()" class="form-control ion-button login-user">Desea Registrarse?</a>
-    <br>
-    <br>
-    <ion-button (click)="OnSubmitLogin()" expand="block">Ingresar</ion-button>
-    <ion-button (click)="onLoginGoogle()" expand="block">Entrar con Google</ion-button>
-    <ion-button (click)="onLoginFacebook()" expand="block">Entrar con Facebook</ion-button>
-  </form>
+    <ion-card-header>
+      <ion-card-subtitle>Iniciar Sesión</ion-card-subtitle>
+      <ion-card-title>Bienvenido</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="myForm">
+        <ion-item>
+          <ion-label position="floating">Correo Electrónico</ion-label>
+          <ion-input type="text" maxlength="100" [(ngModel)]="email" required formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="myForm.get('email').errors && myForm.get('email').dirty">
+          <span color="danger" ion-text>Por favor ingrese un correo válido</span>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input [(ngModel)]="password" type="password" id="password" formControlName="password"></ion-input>
+        </ion-item>
+        <br>
+        <a (click)="registro()" class="form-control ion-button login-user">Desea Registrarse?</a>
+        <br>
+        <br>
+        <ion-button (click)="OnSubmitLogin()" expand="block">Ingresar</ion-button>
+        <ion-button (click)="onLoginGoogle()" expand="block">Entrar con Google</ion-button>
+        <ion-button (click)="onLoginFacebook()" expand="block">Entrar con Facebook</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
