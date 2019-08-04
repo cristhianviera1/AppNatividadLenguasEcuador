@@ -14,11 +14,7 @@ export const environment = {
     appId: "1:979706024262:web:027f515963d9ee7b"
   },
   comunidadesPath: "http://www.google.com",
-<<<<<<< HEAD
-  API_URL: 'http://172.16.11.215:8000'
-=======
   API_URL: "http://192.168.100.149:8000"
->>>>>>> c8b715d3b71751da0867f2b7dc5475f273485832
 };
 
 /*
