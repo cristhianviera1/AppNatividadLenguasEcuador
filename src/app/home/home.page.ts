@@ -4,10 +4,7 @@ import *  as L from 'leaflet';
 import 'leaflet.heat/src/HeatLayer.js';
 import 'leaflet.timeline'
 import 'timeLineSlider/src/leaflet-timeline-slider.js'
-
-import { TransferState } from '@angular/platform-browser';
-//import { EADDRNOTAVAIL } from 'constants';
-//import { type } from 'os';
+import 'simpleheat/simpleheat.js'
 
 @Component({
   selector: 'app-home',
@@ -15,163 +12,192 @@ import { TransferState } from '@angular/platform-browser';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  lenguasLayer = ['Sus abuelos', 'Sus padres', 'Los entrevistados', 'Sus hijos'];
-
   public map: L.Map;
-  comunidades: Array<any>
-  lenguas: Array<String>
-  camposHeat: Array<String>
-  heatLayers: any;
-  preguntasForm = ['52', '53', '54', '55'];
+  comunidades: Array<any>;
+  lenguasJson: any;
 
+  OpenStreetMaps: L.tileLayer;
+  public capasCalor: any;
+  numerosPreguntas: Array<string>
+
+  /**
+   * capasCalor contendrá a todas las capas
+   */
   constructor(private http: HttpClient) {
-    this.comunidades = [];
-    this.lenguas = [];
+    this.OpenStreetMaps = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+      maxZoom: 18,
+      layers: [this.OpenStreetMaps]
+    })
+    this.numerosPreguntas = ['52', '53', '54', '55'];
   }
+
   ionViewDidEnter() {
     this.loadmap();
     this.getComunidadesShape();
-    //this.actualizarCapa();
   }
 
+  /**Dibuja el mapa con capa de OpenStreetMap */
   loadmap() {
     this.map = new L.Map('map');
-    var OpenStreetMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-      maxZoom: 18,
-      layers: [OpenStreetMap]
-    }).addTo(this.map);
+    this.OpenStreetMaps.addTo(this.map);
   }
-  //Función para obtener el centro de un polífgono
-  getCentro(arr) {
-    var twoTimesSignedArea = 0;
-    var cxTimes6SignedArea = 0;
-    var cyTimes6SignedArea = 0;
-    var length = arr.length
-
-    var x = function (i) { return arr[i % length][0] };
-    var y = function (i) { return arr[i % length][1] };
-
-    for (var i = 0; i < arr.length; i++) {
-      var twoSA = x(i) * y(i + 1) - x(i + 1) * y(i);
-      twoTimesSignedArea += twoSA;
-      cxTimes6SignedArea += (x(i) + x(i + 1)) * twoSA;
-      cyTimes6SignedArea += (y(i) + y(i + 1)) * twoSA;
-    }
-    var sixSignedArea = 3 * twoTimesSignedArea;
-    return [cyTimes6SignedArea / sixSignedArea, cxTimes6SignedArea / sixSignedArea];
-  }
-
+  /**Se carga toda la información sobre las encuestas */
   getComunidadesShape() {
     this.http.get('assets/shapeFiles/ddbb.json').subscribe((json: any) => {
+      //variable local para almacenar los objetos y lenguas que se detectan en el doc
       const tempObjects = [];
       const tempLeng = [];
+      /**
+       */
       var comunidad = L.geoJson(json, {
         onEachFeature: function (feature) {
           tempObjects.push(feature);
           if (tempLeng.indexOf(feature.properties.LENGUA_L1) === -1) {
             tempLeng.push(feature.properties.LENGUA_L1)
+            tempLeng.sort();
           }
-        },
+        }
       });
-      this.map.fitBounds(comunidad.getBounds());
       this.comunidades = tempObjects;
-      this.lenguas = tempLeng;
-      this.getLanguages(this.lenguas);
-      this.heatMapLayer("Kichwa", '52')
-    })
-  }
-
-
-  heatMapLayer(lenguaLayer, numForm) {
-    this.heatLayers = {};
-    for (let num in this.preguntasForm) {
-      this.heatLayers[num] = L.layerGroup();
-      for (let c in this.comunidades) {
-        if (lenguaLayer === this.comunidades[c].properties.LENGUA_L1) {
-          var L1 = parseInt(this.comunidades[c].properties.L1_52);
-          var cast = parseInt(this.comunidades[c].properties.CAST_52);
-          var Bili = parseInt(this.comunidades[c].properties.BILI_52);
-          var otra = parseInt(this.comunidades[c].properties.OTRA_52);
-          var nr = parseInt(this.comunidades[c].properties.NR_52);
-          var total = L1 + cast + Bili + otra + nr;
-          var result = 1 * (L1 + Bili) / total
-          var centro = this.getCentro(this.comunidades[c].geometry.coordinates[0][0]);
-          this.heatLayers[num].addLayer(L.heatLayer([[centro[0], centro[1], result]]))
-        }
+      /**
+       * Objeto en el cual guardaremos los geoJson para generar el control de capas
+       */
+      this.lenguasJson = {
       }
-    }
-    return this.heatLayers;
-  }
-
-
-
-
-  //Dibujamos un control con las lenguas principales 
-  getLanguages(lengs) {
-    var lenguas = {
-    }
-    for (var i = 0; i < lengs.length; i++) {
-      lenguas[lengs[i]] = []
-      for (var j = 0; j < this.comunidades.length; j++) {
-        if (this.comunidades[j].properties.LENGUA_L1 == lengs[i]) {
-          lenguas[lengs[i]].push(this.comunidades[j])
-        }
-      }
-      lenguas[lengs[i]] = L.geoJson(lenguas[lengs[i]], {
-        onEachFeature: function (feature, featureLayer) {
-          featureLayer.bindPopup(feature.properties.PARROQUIA);
-          featureLayer.on('mouseover', function (e) {
-            this.openPopup();
-          });
-          featureLayer.on('mouseout', function (e) {
-            this.closePopup();
-          });
-        },
-        style: function (layer) {
-          return {
-            fillOpacity: 0.6,
-            color: '#fff',
-            weight: 2,
+      /**Bucle para recorrer los objetos y dirigir a los de misma lengua a un objeto */
+      for (let lenguaje in tempLeng) {
+        this.lenguasJson[tempLeng[lenguaje]] = [];
+        for (let parroquia in tempObjects) {
+          if (tempObjects[parroquia].properties.LENGUA_L1 == tempLeng[lenguaje]) {
+            this.lenguasJson[tempLeng[lenguaje]].push(tempObjects[parroquia]);
           }
         }
-      });
-    }
-    var controlLenguas = L.control.layers(lenguas, null, {
-      collapsed: true,
+
+        this.lenguasJson[tempLeng[lenguaje]] = L.geoJson(this.lenguasJson[tempLeng[lenguaje]], {
+          onEachFeature: function (feature, featureLayer) {
+            featureLayer.bindPopup(feature.properties.PARROQUIA);
+            featureLayer.on('mouseover', function (e) {
+              this.openPopup();
+            });
+            featureLayer.on('mouseout', function (e) {
+              this.closePopup();
+            });
+          },
+          style: function (layer) {
+            return {
+              fillOpacity: 0,
+              weight: 1,
+            }
+          }
+        });
+      }
+      /**
+       * Se genera control de lenguas y se lo agrega al mapa
+       */
+      L.control.layers(this.lenguasJson, null, {
+        collapsed: true,
+      }).addTo(this.map);
+      this.map.fitBounds(comunidad.getBounds());
+      this.controlCambioLengua();
     })
-    this.map.addControl(controlLenguas);
-
-    L.control.timelineSlider({
-      timelineItems: ["Abuelos", "Padres", "Entrevistados", "Hijos"],
-      changeMap: this.changeGeneration,
-      extraChangeMapParams: { exclamation: "Hello World!" }
-    }).addTo(this.map);
   }
 
-  actualizarCapa() {
-    var response = this.map.on('baselayerchange', function (e) { return e.name })
-  }
+  controlCambioLengua() {
+    var map = this.map
+    var osp = this.OpenStreetMaps;
+    var ec = this.lenguasJson;
+    var comunidades = this.comunidades;
+    var numPregunta = this.numerosPreguntas;
+    //objeto donde guardaremos todas las capas por pregunta seleccionada
+    var heatMapLayers;
 
-  changeGeneration(label) {
-    this.heatMapLayer('Kichwa', 55);
-    if (label.label == "Abuelos") {
-      alert('1')
-      this.heatLayers[0].addTo(this.map);
-    } else if (label.label == "Padres") {
-      this.map
-      
-    } else if (label.label == "Entrevistados") {
-      alert('3')
-      
-    } else if (label.label == "Hijos") {
-      alert('4')
-     
+    this.map.on('baselayerchange', function (e) {
+      map.eachLayer(function (l) {
+        l.remove();
+      })
+      osp.addTo(map);
+      //Enfoca la comunidad que ha seleccionado
+      var posicion = ec[e.name].getBounds()
+      var zoom = map.getBoundsZoom(ec[e.name].getBounds());
+      var lat = (posicion._northEast.lat + posicion._southWest.lat) / 2
+      var lng = (posicion._northEast.lng + posicion._southWest.lng) / 2
+      map.flyTo([lat, lng], zoom, {
+        animate: true,
+        duration: 0.8
+      });
+      mapaCalor([e.name]);
+    })
+    /**
+     * Función para obtener el centro de un pollígono
+     * @param arr Array que contiene lat y lng 
+     */
+    function getCentro(arr) {
+      var twoTimesSignedArea = 0;
+      var cxTimes6SignedArea = 0;
+      var cyTimes6SignedArea = 0;
+      var length = arr.length
+
+      var x = function (i) { return arr[i % length][0] };
+      var y = function (i) { return arr[i % length][1] };
+
+      for (var i = 0; i < arr.length; i++) {
+        var twoSA = x(i) * y(i + 1) - x(i + 1) * y(i);
+        twoTimesSignedArea += twoSA;
+        cxTimes6SignedArea += (x(i) + x(i + 1)) * twoSA;
+        cyTimes6SignedArea += (y(i) + y(i + 1)) * twoSA;
+      }
+      var sixSignedArea = 3 * twoTimesSignedArea;
+      return [cyTimes6SignedArea / sixSignedArea, cxTimes6SignedArea / sixSignedArea];
     }
+    function mapaCalor(layerName) {
+      /**Se genera bucle para recorrer la encuesta y dibujar mapas de calor */
+      heatMapLayers = {}
+      //Recorre 55,54,53,52
+      for (let numP in numPregunta) {
+        var LatLngIntensity = []
+        heatMapLayers[numPregunta[numP]] = L.heatLayer(LatLngIntensity, { gradient: { 0.2: 'green', 0.3: 'yellow', 0.4: 'red' }, radius: 50 }).addTo(map)
+        //Recorre cada Parroquia
+        for (let parr in comunidades) {
+          if (comunidades[parr].properties.LENGUA_L1 == layerName) {
+            /**Manejo solo las parroquias que tienen el mismo idioma */
+            var centro = getCentro(comunidades[parr].geometry.coordinates[0][0]);
+            //Se declara una variable temporal para guardar el número de personas que han respondido la encuesta por parroquia
+            var numPersonas = parseInt(comunidades[parr].properties.TOTAL_ENC);
+            var lenUno: number;
+            var result = ((lenUno * 1) / numPersonas);
+
+            //Recorre cada propiedad de la parroquia
+            for (let forms in comunidades[parr].properties) {
+              if (forms.slice(-2) == numPregunta[numP]) {
+                if (forms.slice(0, -3) == "L1") {
+                  lenUno = + parseFloat(comunidades[parr].properties[forms]);
+                }
+                if (forms.slice(0, -3) == "BILI") {
+                  lenUno = + parseFloat(comunidades[parr].properties[forms]);
+                }
+              }
+            }
+            LatLngIntensity.push([centro[0], centro[1], result])
+          }
+        }
+      }
+    }
+    this.control();
   }
+  control() {
+    /**Control de slider por generación */
+    L.control.timelineSlider({
+      timelineItems: ["Abuelos", "Padres", "Encuestado", "Hijo"],
+      changeMap: function () {
+        //console.log(heatMapLayers['53'])
+        /*heatMapLayers['53'].addTo(map);
+        /**Función que se ejecuta cada que se cambia la selección del slider */
+        // map.eachLayer(function (e) {
 
-  //
-
-
+        // })
+      }
+    }).addTo(this.map)
+  }
 }
-
+//COMPLETE 200 Ptos Prros OPRESORES >:v
