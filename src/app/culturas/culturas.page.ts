@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataApiService } from './../services/data-api.service';
+import { NavController, ModalController } from '@ionic/angular';
+import { ModalPage } from '../modal/modal.page'
+
 
 
 
@@ -15,7 +18,7 @@ export class CulturasPage implements OnInit {
   public culturas = [];
   public cultura = '';
 
-  constructor(private ApiService: DataApiService, private route: Router) { }
+  constructor(private ApiService: DataApiService, private route: Router, private nav: NavController, private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.ApiService.getAllCulturas().subscribe(culturas => {
@@ -25,10 +28,14 @@ export class CulturasPage implements OnInit {
 
   }
 
-
-
+  async mostrarModal() {
+    const modal = await this.modalCtrl.create({
+      component: ModalPage
+    })
+    modal.present()
+  }
   /*
-  buscarParroquia(event) {
+  buscarParroquia(event) {s
     const texto = event.target.value;
     this.textoBuscar = texto;
     console.log(texto);
