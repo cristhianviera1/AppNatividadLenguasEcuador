@@ -10,34 +10,37 @@
 </ion-header>
 
 <ion-content>
-  <form name="formCultura" #formCultura="ngForm" (ngSubmit)="AddCultura(formCultura)">
-    <ion-item>
-      <ion-label position="floating">Titulo:</ion-label>
-      <ion-input type="text" name="titulo" placeholder="Ingresa el titulo de tu publicacion" [(ngModel)]="titulo">
-      </ion-input>
-    </ion-item>
-    <ion-item>
-
-      <ion-label position="floating">Provincia:</ion-label>
-      <ion-input type="text" name="provincia" placeholder="Ingresa la provincia" [(ngModel)]="provincia"></ion-input>
-    </ion-item>
-    <ion-item>
-
+  <ion-card>
+    <form name="formCultura" #formCultura="ngForm" (ngSubmit)="AddCultura(formCultura)">
       <ion-item>
-        <ion-label position="floating">Descripción</ion-label>
-        <ion-textarea rows="6" cols="40" name="descripcion" [(ngModel)]="descripcion" placeholder="Ingresa la descripcion...">
-        </ion-textarea>
+        <ion-label position="floating">Titulo:</ion-label>
+        <ion-input type="text" name="titulo" placeholder="Ingresa el titulo de tu publicacion" [(ngModel)]="titulo">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+
+        <ion-label position="floating">Provincia:</ion-label>
+        <ion-input type="text" name="provincia" placeholder="Ingresa la provincia" [(ngModel)]="provincia"></ion-input>
+      </ion-item>
+      <ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción</ion-label>
+          <ion-textarea rows="6" cols="40" name="descripcion" [(ngModel)]="descripcion"
+            placeholder="Ingresa la descripcion...">
+          </ion-textarea>
+        </ion-item>
+
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Subir Imagen:</ion-label>
+        <ion-input type="file" accept=".png, .jpg" (change)="onUpload($event)"></ion-input>
       </ion-item>
 
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Subir Imagen:</ion-label>
-      <ion-input type="file" accept=".png, .jpg" (change)="onUpload($event)"></ion-input>
-    </ion-item>
+      <ion-input type="hidden" [value]="urlImage | async" name="imagen" [(ngModel)]="imagen"></ion-input>
 
-    <ion-input type="hidden" [value]="urlImage | async" name="imagen" [(ngModel)]="imagen"></ion-input>
+      <ion-button type="submit" *ngIf="urlImage | async; else btnDisabled" block>Subir</ion-button>
 
-    <ion-button type="submit" *ngIf="urlImage | async; else btnDisabled" block>Subir</ion-button>
-   
-  </form>
+    </form>
+  </ion-card>
 </ion-content>
