@@ -23,9 +23,12 @@ export class LoginPage implements OnInit {
  
 
   OnSubmitLogin() {
-    this.authService.login(this.email, this.password).then( res => {this.menu.enable(true)
+    this.authService.login(this.email, this.password).then( res => {this.menu.enable(true);
 this.router.navigate(['/home']);
-    }).catch(err => alert("Los datos ingresados son incorrectos o no existen."))
+    }).catch(err => {this.menu.enable(false);
+      alert("Los datos ingresados son incorrectos o no existen.")
+    }
+    )
   }
 
   onLoginGoogle(): void {
@@ -46,6 +49,10 @@ this.router.navigate(['/home']);
   }
   onLoginRedirect(): void {
     this.router.navigate(['home']);
+  }
+
+  registro(){
+    this.router.navigate(['/register']);
   }
 
 }

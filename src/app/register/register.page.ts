@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -13,44 +14,21 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class RegisterPage implements OnInit {
 
-  constructor(private router: Router, private authService: AuthService, private storage: AngularFireStorage) { }
+  constructor(private router: Router, private authService: AuthService, private storage: AngularFireStorage, private menu: MenuController) { }
   public email: string = '';
   public password: string = '';
 
   ngOnInit() {
+    this.menu.enable(false)
   }
 
 
-  onAddUser() {
+  add(){
     this.authService.registerUser(this.email, this.password)
-      .then((res) => {
-        this.authService.isAuth().subscribe(user => {
-          if (user) {
-            user.updateProfile({
-              displayName: '',
-
-            }).then(() => {
-              this.router.navigate(['admin/list-books']);
-            }).catch((error) => console.log('error', error));
-          }
-        });
-      }).catch(err => console.log('err', err.message));
-  }
-  onLoginGoogle(): void {
-    this.authService.loginGoogleUser()
-      .then((res) => {
-        this.onLoginRedirect();
-      }).catch(err => console.log('err', err.message));
-  }
-  onLoginFacebook(): void {
-    this.authService.loginFacebookUser()
-      .then((res) => {
-        this.onLoginRedirect();
-      }).catch(err => console.log('err', err.message));
-  }
-
-  onLoginRedirect(): void {
-    this.router.navigate(['admin/list-books']);
-  }
+    .then( res => { alert("Registro Exitoso")
+      this.router.navigate(['/login']);
+          }).catch(err => alert("Los datos ingresados son incorrectos o no existen."))
+        }
+  
 
 }
