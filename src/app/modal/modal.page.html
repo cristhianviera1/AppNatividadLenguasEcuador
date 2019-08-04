@@ -38,6 +38,6 @@
     <ion-input type="hidden" [value]="urlImage | async" name="imagen" [(ngModel)]="imagen"></ion-input>
 
     <ion-button type="submit" *ngIf="urlImage | async; else btnDisabled" block>Subir</ion-button>
-    <ion-button type="button" block #btnClose data-dismiss>Cerrar</ion-button>
+   
   </form>
 </ion-content>
