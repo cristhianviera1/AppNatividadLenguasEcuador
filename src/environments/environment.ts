@@ -9,9 +9,9 @@ export const environment = {
     authDomain: "natividad-de-lenguas.firebaseapp.com",
     databaseURL: "https://natividad-de-lenguas.firebaseio.com",
     projectId: "natividad-de-lenguas",
-    storageBucket: "",
+    storageBucket: "natividad-de-lenguas.appspot.com",
     messagingSenderId: "979706024262",
-    appId: "1:979706024262:web:027f515963d9ee7b"
+    appId: "1:979706024262:web:7020174259dad321"
   },
   comunidadesPath: "http://www.google.com",
   API_URL: "http://192.168.100.149:8000"
