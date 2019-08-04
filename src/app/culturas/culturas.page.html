@@ -9,17 +9,17 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-searchbar placeholder="Buscar..." color="dark" (ionChange)="buscarParroquia($event)"></ion-searchbar> 
-  <ion-card *ngFor="let parroquia of parroquias | filter:textoBuscar">
+    <ion-searchbar placeholder="Buscar..." color="dark"></ion-searchbar> 
+  <ion-card *ngFor="let cultura of culturas | filter:textoBuscar">
     <ion-item>
       <ion-icon name="logo-freebsd-devil" slot="start"></ion-icon>
-      <ion-label>{{parroquia.nombreParroquia}}</ion-label>
-      <ion-button fill="outline" slot="end" (click)="enviarParametros(parroquia)" >Mas..</ion-button>
+      <ion-label>{{cultura.titulo}}</ion-label>
+      <ion-button fill="outline" slot="end"  >Mas..</ion-button>
     </ion-item>
-    <img src="{{parroquia.imagen}}" />
+    <img src="{{cultura.imagen}}" />
     
     <ion-card-content>
-      {{parroquia.descripcion| words : 25}}
+      {{cultura.descripcion| words : 25}}
     </ion-card-content>
   </ion-card>
 

@@ -183,21 +183,24 @@ export class HomePage {
         }
       }
     }
-    this.control();
-  }
-  control() {
-    /**Control de slider por generación */
+
     L.control.timelineSlider({
       timelineItems: ["Abuelos", "Padres", "Encuestado", "Hijo"],
-      changeMap: function () {
-        //console.log(heatMapLayers['53'])
-        /*heatMapLayers['53'].addTo(map);
-        /**Función que se ejecuta cada que se cambia la selección del slider */
-        // map.eachLayer(function (e) {
-
-        // })
+      changeMap: function (e) {
+        for (let numP in numPregunta) {
+          if (map.hasLayer(heatMapLayers[numPregunta[numP]])) {
+            heatMapLayers[numPregunta[numP]].remove();
+          }
+        }
+        if(e.label=="Padres"){
+          heatMapLayers[numPregunta[numP]].addTo(map);
+        }
+        console.log(e);
       }
     }).addTo(this.map)
   }
+  /*control() {
+    /**Control de slider por generación */
+  //}
 }
 //COMPLETE 200 Ptos Prros OPRESORES >:v
