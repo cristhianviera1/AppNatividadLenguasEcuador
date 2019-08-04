@@ -230,13 +230,10 @@ export class HomePage {
             }
           }
         }
-<<<<<<< HEAD
-=======
         /*if(e.label=="Padres"){
           heatMapLayers[numPregunta[numP]].addTo(map);
         }*/
         console.log(e);
->>>>>>> 55f3cdcdc137ddb5b48c9d6b88b82798440c8f5d
       }
     }).addTo(map)
   }
