@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title text-align="center">
+    <ion-title text-center>
       Culturas
       <ion-button (click)="mostrarModal()" float-right>Nuevo
         <ion-icon name="md-add" float-right></ion-icon>
@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-searchbar placeholder="Buscar..." color="dark"></ion-searchbar>
+  <ion-searchbar placeholder="Buscar..." color="white"></ion-searchbar>
   <ion-card *ngFor="let cultura of culturas | filter:textoBuscar">
     <ion-item>
       <ion-icon name="logo-freebsd-devil" slot="start"></ion-icon>

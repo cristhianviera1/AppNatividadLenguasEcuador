@@ -16,9 +16,9 @@ import { MenuController } from '@ionic/angular';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Home',
+      title: 'Inicio',
       url: '/home',
-      icon: 'ios-map'
+      icon: 'ios-compass'
     },
     {
       title: 'Culturas',
@@ -26,9 +26,9 @@ export class AppComponent {
       icon: 'md-bonfire'
     },
     {
-      title: 'Recursos',
+      title: 'Perfil',
       url: '/recursos',
-      icon: 'ios-stats'
+      icon: 'ios-contact'
     }
 
     
