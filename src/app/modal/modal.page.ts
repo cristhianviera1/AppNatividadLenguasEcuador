@@ -48,6 +48,7 @@ export class ModalPage implements OnInit {
       this.dataApi.updateCultura(formCultura.value);
     }
     formCultura.resetForm();
+    this.close();
   }
 
 }
