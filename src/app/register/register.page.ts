@@ -32,8 +32,7 @@ export class RegisterPage implements OnInit {
       .then(res => {
         alert("Registro Exitoso")
         this.router.navigate(['/login']);
+        this.menu.enable(true);
       }).catch(err => alert("Los datos ingresados son incorrectos o no existen."))
   }
-
-
 }
