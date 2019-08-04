@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {AuthGuard} from './guards/auth.guard';
+import { NoLoginGuard } from './guards/no-login.guard';
 
 const routes: Routes = [
   {
@@ -9,20 +11,21 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule), canActivate: [AuthGuard]
   },
   { path: 'culturas',
-    loadChildren: () => import( './culturas/culturas.module').then(m => m.CulturasPageModule)
+    loadChildren: () => import( './culturas/culturas.module').then(m => m.CulturasPageModule), canActivate: [AuthGuard]
   },
   { path: 'recursos',
-    loadChildren: () => import ('./recursos/recursos.module').then(m => m.RecursosPageModule)
+    loadChildren: () => import ('./recursos/recursos.module').then(m => m.RecursosPageModule), canActivate: [AuthGuard]
   },
   { path: 'cultura-descripcion',
-  loadChildren: () => import ('./cultura-descripcion/cultura-descripcion.module').then(m => m.CulturaDescripcionPageModule)
+  loadChildren: () => import ('./cultura-descripcion/cultura-descripcion.module').then(m => m.CulturaDescripcionPageModule), canActivate: [AuthGuard]
   },
   { path: 'login',
-  loadChildren: () => import ('./login/login.module').then(m => m.LoginPageModule)
-  },  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
+  loadChildren: () => import ('./login/login.module').then(m => m.LoginPageModule), canActivate : [NoLoginGuard]
+  },
+  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'modal', loadChildren: './modal/modal.module#ModalPageModule' }
 
 
