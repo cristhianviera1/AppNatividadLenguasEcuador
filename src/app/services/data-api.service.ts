@@ -30,5 +30,33 @@ export class DataApiService {
       });
     }));
   }
+
+  getOneCultura(idCultura: string) {
+    this.culturaDoc = this.afs.doc<CulturaInterface>(`culturas/${idCultura}`);
+    return this.cultura = this.culturaDoc.snapshotChanges().pipe(map(action => {
+      if (action.payload.exists === false) {
+        return null;
+      } else {
+        const data = action.payload.data() as CulturaInterface;
+        data.id = action.payload.id;
+        return data;
+      }
+    }));
+  }
+
+  addCultura(cultura: CulturaInterface) {
+    this.culturasCollection.add(cultura);
+  }
+
+  updateCultura(cultura: CulturaInterface) {
+    const idCultura = cultura.id;
+    this.culturaDoc = this.afs.doc<CulturaInterface>(`culturas/${idCultura}`);
+    this.culturaDoc.update(cultura);
+  }
+
+  deleteCultura(idCultura: string) {
+    this.culturaDoc = this.afs.doc<CulturaInterface>(`culturas/${idCultura}`);
+    this.culturaDoc.delete();
+  }
 }
 
