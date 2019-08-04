@@ -15,6 +15,9 @@
   <ion-input [(ngModel)]="password" type="password" id="password" name="password"></ion-input>
 </ion-item>
 <br>
+<a (click)="registro()" class="form-control login-user">Desea Registrarse?</a>
+<br>
+<br>
 <ion-button (click)="OnSubmitLogin()" expand="block">Ingresar</ion-button>
 <ion-button (click)="onLoginGoogle()" expand="block">Entrar con Google</ion-button>
 <ion-button (click)="onLoginFacebook()" expand="block">Entrar con Facebook</ion-button>
