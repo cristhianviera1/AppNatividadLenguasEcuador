@@ -17,15 +17,17 @@
             </ion-item>
 
           </ion-menu-toggle>
-          <ion-item (click)="onLogout()">
-              <ion-icon name="ios-log-out" slot="start" ></ion-icon>
-            <ion-label>
-             Salir
-            </ion-label>
-          </ion-item>
         </ion-list>
-        <img src="../assets/img/Logolenguas.png">
+        <ion-item (click)="onLogout()">
+          <ion-icon name="ios-log-out" slot="start"></ion-icon>
+          <ion-label>
+            Salir
+          </ion-label>
+        </ion-item>
       </ion-content>
+      <ion-footer no-shadow>
+        <img src="../assets/img/Logolenguas.png">
+      </ion-footer>
     </ion-menu>
     <script src="/assets/simpleHeat/simpleheat.js"></script>
     <ion-router-outlet main></ion-router-outlet>
