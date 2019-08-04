@@ -3,7 +3,8 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { MenuController } from '@ionic/angular';
+import { MenuController, AlertController } from '@ionic/angular';
+
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -14,7 +15,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterPage implements OnInit {
   myForm: FormGroup;
-  constructor(private router: Router,
+  constructor(
+    private alert: AlertController,
+    private router: Router,
     private authService: AuthService,
     private storage: AngularFireStorage,
     private menu: MenuController,
@@ -28,11 +31,27 @@ export class RegisterPage implements OnInit {
     this.menu.enable(false)
   }
   add() {
-    this.authService.registerUser(this.myForm.value.email,this.myForm.value.password)
+
+    this.authService.registerUser(this.myForm.value.email, this.myForm.value.password)
       .then(res => {
-        alert("Registro Exitoso")
+        this.alert.create({
+          header: 'Registrado exitósamente',
+          message: 'Bienvenido a la comunidad MMV',
+          buttons: ['ok :v']
+        }).then(alert => {
+          alert.present();
+        });
         this.router.navigate(['/login']);
         this.menu.enable(true);
-      }).catch(err => alert("Los datos ingresados son incorrectos o no existen."))
+      }).catch(err => {
+        this.alert.create({
+          header: 'Ha fallado el registro',
+          message: 'Revise los campos campos',
+          buttons: ['alv prro']
+        }).then(alert => {
+          alert.present();
+        });
+      }
+      )
   }
 }

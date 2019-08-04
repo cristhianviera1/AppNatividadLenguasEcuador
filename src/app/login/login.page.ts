@@ -13,8 +13,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  public userName : string
   myForm: FormGroup;
-  constructor(private authService: AuthService,
+  constructor(private authService: AuthService,    
     public router: Router,
     public menu: MenuController,
     public fb: FormBuilder) {
@@ -32,6 +33,7 @@ export class LoginPage implements OnInit {
 
   OnSubmitLogin() {
     this.authService.login(this.myForm.value.email, this.myForm.value.password).then(res => {
+      //this.userName=res.user.email;
       this.menu.enable(true);
       this.router.navigate(['/home']);
     }).catch(err => {

@@ -127,6 +127,9 @@ export class HomePage {
         duration: 0.8
       });
       mapaCalor([e.name]);
+      heatMapLayers['55'].remove()
+      heatMapLayers['54'].remove()
+      heatMapLayers['53'].remove()
     })
     /**
      * Función para obtener el centro de un pollígono
@@ -162,6 +165,7 @@ export class HomePage {
           0.2: 'yellow',
           0.3: 'red'
         }, radius: 120 }).addTo(map)
+        
         //Recorre cada Parroquia
         for (let parr in comunidades) {
           if (comunidades[parr].properties.LENGUA_L1 == layerName) {
