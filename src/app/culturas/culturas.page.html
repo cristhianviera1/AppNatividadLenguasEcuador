@@ -1,24 +1,26 @@
 <ion-header>
-    <ion-toolbar>
-        
-        <ion-title text-center>
-          Culturas
-          <ion-button (click)="mostrarModal()" float-right>Nuevo
-            <ion-icon name="md-add" float-right></ion-icon>
-          </ion-button>
-        </ion-title>
-      </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title text-align="center">
+      Culturas
+      <ion-button (click)="mostrarModal()" float-right>Nuevo
+        <ion-icon name="md-add" float-right></ion-icon>
+      </ion-button>
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-searchbar placeholder="Buscar..." color="dark"></ion-searchbar> 
+  <ion-searchbar placeholder="Buscar..." color="dark"></ion-searchbar>
   <ion-card *ngFor="let cultura of culturas | filter:textoBuscar">
     <ion-item>
       <ion-icon name="logo-freebsd-devil" slot="start"></ion-icon>
       <ion-label>{{cultura.titulo}}</ion-label>
-      <ion-button fill="outline" slot="end"  >Mas..</ion-button>
+      <ion-button fill="outline" slot="end">Mas..</ion-button>
     </ion-item>
     <img src="{{cultura.imagen}}" />
-    
+
     <ion-card-content>
       {{cultura.descripcion| words : 25}}
     </ion-card-content>

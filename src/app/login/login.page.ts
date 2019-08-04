@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+
+
 
 @Component({
   selector: 'app-login',
@@ -9,23 +13,29 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
-  email: string;
-  password: string;
-
-  constructor(private authService: AuthService, public router: Router,public menu: MenuController) { }
-
+  myForm: FormGroup;
+  constructor(private authService: AuthService,
+    public router: Router,
+    public menu: MenuController,
+    public fb: FormBuilder) {
+    this.myForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.pattern(/^[a-z0-9_-]{6,18}$/)]],
+    });
+  }
   ngOnInit() {
-   
-      this.menu.enable(false);
+
+    this.menu.enable(false);
   }
 
- 
+
 
   OnSubmitLogin() {
-    this.authService.login(this.email, this.password).then( res => {this.menu.enable(true);
-this.router.navigate(['/home']);
-    }).catch(err => {this.menu.enable(false);
+    this.authService.login(this.myForm.value.email, this.myForm.value.password).then(res => {
+      this.menu.enable(true);
+      this.router.navigate(['/home']);
+    }).catch(err => {
+      this.menu.enable(false);
       alert("Los datos ingresados son incorrectos o no existen.")
     }
     )
@@ -52,7 +62,7 @@ this.router.navigate(['/home']);
     this.router.navigate(['home']);
   }
 
-  registro(){
+  registro() {
     this.router.navigate(['/register']);
   }
 

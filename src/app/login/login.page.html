@@ -5,20 +5,25 @@
 </ion-header>
 
 <ion-content>
-  <img class="iconLogin" src="../../assets/img/iconLogin.png">
- <ion-item>
-   <ion-label position="floating">Correo Electrónico</ion-label>
-   <ion-input type="text" [(ngModel)]="email" name="email"></ion-input>
- </ion-item>
- <ion-item>
-  <ion-label position="floating">Contraseña</ion-label>
-  <ion-input [(ngModel)]="password" type="password" id="password" name="password"></ion-input>
-</ion-item>
-<br>
-<a (click)="registro()" class="form-control login-user">Desea Registrarse?</a>
-<br>
-<br>
-<ion-button (click)="OnSubmitLogin()" expand="block">Ingresar</ion-button>
-<ion-button (click)="onLoginGoogle()" expand="block">Entrar con Google</ion-button>
-<ion-button (click)="onLoginFacebook()" expand="block">Entrar con Facebook</ion-button>
+  <form [formGroup]="myForm">
+    <img class="iconLogin" src="../../assets/img/iconLogin.png">
+    <ion-item>
+      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-input type="text" maxlength="100" [(ngModel)]="email" required formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="myForm.get('email').errors && myForm.get('email').dirty">
+      <span color="danger" ion-text >Por favor ingrese un correo válido</span>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input [(ngModel)]="password" type="password" id="password" formControlName="password"></ion-input>
+    </ion-item>
+    <br>
+    <a (click)="registro()" class="form-control ion-button login-user">Desea Registrarse?</a>
+    <br>
+    <br>
+    <ion-button (click)="OnSubmitLogin()" expand="block">Ingresar</ion-button>
+    <ion-button (click)="onLoginGoogle()" expand="block">Entrar con Google</ion-button>
+    <ion-button (click)="onLoginFacebook()" expand="block">Entrar con Facebook</ion-button>
+  </form>
 </ion-content>
