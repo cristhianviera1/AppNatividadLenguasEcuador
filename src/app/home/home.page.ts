@@ -153,30 +153,6 @@ export class HomePage {
     function mapaCalor(layerName) {
       /**Se genera bucle para recorrer la encuesta y dibujar mapas de calor */
       heatMapLayers = {}
-      var gradient = {
-        "52": {
-          0.1: 'green',
-          0.2: 'yellow',
-          0.3: 'red'
-        },
-        "53": {
-          0.3: 'green',
-          0.4: 'yellow',
-          0.5: 'red'
-        },
-        "54": {
-          0.6: 'green',
-          0.3: 'yellow',
-          0.1: 'red'
-        },
-        "55": {
-          0.7: 'green',
-          0.5: 'yellow',
-          0.1: 'red'
-        }
-
-      }
-
       //Recorre 55,54,53,52
       for (let numP in numPregunta) {
         var LatLngIntensity = []
