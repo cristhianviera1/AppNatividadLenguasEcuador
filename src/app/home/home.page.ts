@@ -192,9 +192,9 @@ export class HomePage {
             heatMapLayers[numPregunta[numP]].remove();
           }
         }
-        if(e.label=="Padres"){
+        /*if(e.label=="Padres"){
           heatMapLayers[numPregunta[numP]].addTo(map);
-        }
+        }*/
         console.log(e);
       }
     }).addTo(this.map)

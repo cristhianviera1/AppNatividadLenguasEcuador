@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +13,17 @@ export class LoginPage implements OnInit {
   email: string;
   password: string;
 
-  constructor(private authService: AuthService, public router: Router) { }
+  constructor(private authService: AuthService, public router: Router,public menu: MenuController) { }
 
   ngOnInit() {
+   
+      this.menu.enable(false);
   }
 
+ 
+
   OnSubmitLogin() {
-    this.authService.login(this.email, this.password).then( res => {
+    this.authService.login(this.email, this.password).then( res => {this.menu.enable(true)
 this.router.navigate(['/home']);
     }).catch(err => alert("Los datos ingresados son incorrectos o no existen."))
   }
@@ -32,7 +37,7 @@ this.router.navigate(['/home']);
   onLoginFacebook(): void {
     this.authService.loginFacebookUser()
       .then((res) => {
-        this.router.navigate(['/home']);
+        this.onLoginRedirect();
       }).catch(err => console.log('err', err.message));
   }
 
