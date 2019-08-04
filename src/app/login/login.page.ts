@@ -45,6 +45,7 @@ this.router.navigate(['/home']);
   }
 
   onLogout() {
+    console.log("<3");
     this.authService.logoutUser();
   }
   onLoginRedirect(): void {
