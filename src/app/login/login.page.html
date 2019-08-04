@@ -1,15 +1,15 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title text-center>Iniciar Sesión</ion-title>
+    <ion-title text-center>Ayllu Llakta App</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-card>
-    <img class="iconLogin" src="../../assets/img/iconLogin.png">
+    <img class="iconLogin" src="../../assets/img/Logolenguas.png">
     <ion-card-header>
-      <ion-card-subtitle>Iniciar Sesión</ion-card-subtitle>
-      <ion-card-title>Bienvenido</ion-card-title>
+      <ion-card-subtitle>POR Y PARA LA COMUNIDAD</ion-card-subtitle>
+      <ion-card-title>Inciar Sesión</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <form [formGroup]="myForm">
@@ -25,7 +25,7 @@
           <ion-input [(ngModel)]="password" type="password" id="password" formControlName="password"></ion-input>
         </ion-item>
         <br>
-        <a (click)="registro()" class="form-control ion-button login-user">Desea Registrarse?</a>
+        <a (click)="registro()" class="form-control ion-button login-user">¿Eres nuevo?</a>
         <br>
         <br>
         <ion-button (click)="OnSubmitLogin()" expand="block">Ingresar</ion-button>
