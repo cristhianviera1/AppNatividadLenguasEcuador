@@ -153,10 +153,39 @@ export class HomePage {
     function mapaCalor(layerName) {
       /**Se genera bucle para recorrer la encuesta y dibujar mapas de calor */
       heatMapLayers = {}
+      var gradient = {
+        "52": {
+          0.1: 'green',
+          0.2: 'yellow',
+          0.3: 'red'
+        },
+        "53": {
+          0.3: 'green',
+          0.4: 'yellow',
+          0.5: 'red'
+        },
+        "54": {
+          0.6: 'green',
+          0.3: 'yellow',
+          0.1: 'red'
+        },
+        "55": {
+          0.7: 'green',
+          0.5: 'yellow',
+          0.1: 'red'
+        }
+
+      }
+
       //Recorre 55,54,53,52
       for (let numP in numPregunta) {
         var LatLngIntensity = []
-        heatMapLayers[numPregunta[numP]] = L.heatLayer(LatLngIntensity, { gradient: { 0.2: 'green', 0.3: 'yellow', 0.4: 'red' }, radius: 50 }).addTo(map)
+
+        heatMapLayers[numPregunta[numP]] = L.heatLayer(LatLngIntensity, { gradient: {
+          0.1: 'green',
+          0.2: 'yellow',
+          0.3: 'red'
+        }, radius: 120 }).addTo(map)
         //Recorre cada Parroquia
         for (let parr in comunidades) {
           if (comunidades[parr].properties.LENGUA_L1 == layerName) {
@@ -185,19 +214,24 @@ export class HomePage {
     }
 
     L.control.timelineSlider({
-      timelineItems: ["Abuelos", "Padres", "Encuestado", "Hijo"],
+      timelineItems: ["Abuelos", "Padres", "Encuestado", "Hijos"],
       changeMap: function (e) {
         for (let numP in numPregunta) {
           if (map.hasLayer(heatMapLayers[numPregunta[numP]])) {
             heatMapLayers[numPregunta[numP]].remove();
+            if (e.label == "Abuelos") {
+              heatMapLayers["52"].addTo(map);
+            } else if (e.label == "Padres") {
+              heatMapLayers["53"].addTo(map);
+            } else if (e.label == "Encuestado") {
+              heatMapLayers["54"].addTo(map);
+            } else if (e.label == "Hijos") {
+              heatMapLayers["55"].addTo(map);
+            }
           }
         }
-        if(e.label=="Padres"){
-          heatMapLayers[numPregunta[numP]].addTo(map);
-        }
-        console.log(e);
       }
-    }).addTo(this.map)
+    }).addTo(map)
   }
   /*control() {
     /**Control de slider por generación */
