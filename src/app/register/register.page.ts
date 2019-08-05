@@ -21,6 +21,7 @@ export class RegisterPage implements OnInit {
     private authService: AuthService,
     private storage: AngularFireStorage,
     private menu: MenuController,
+    private route: Router,
     public fb: FormBuilder) {
     this.myForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -29,6 +30,9 @@ export class RegisterPage implements OnInit {
   }
   ngOnInit() {
     this.menu.enable(false)
+  }
+  regresar() {
+    this.route.navigate(['/login']);
   }
   add() {
 

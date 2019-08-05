@@ -1,10 +1,10 @@
 <ion-app>
   <ion-header translucent>
     <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
-          </ion-buttons>
-      <ion-title>{{parroquiaEnviada.nombreParroquia}}</ion-title>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{titulo}}</ion-title>
     </ion-toolbar>
   </ion-header>,
   <ion-content fullscreen>
@@ -13,13 +13,13 @@
       Regresar
     </ion-button>
     <ion-card>
-      <img src="{{parroquiaEnviada.imagen}}" />
+      <img src="{{imagen}}"/>
       <ion-card-header>
-        <ion-card-subtitle>{{parroquiaEnviada.ubicacion}}</ion-card-subtitle>
-        <ion-card-title>{{parroquiaEnviada.idLenguaNativa}}</ion-card-title>
+        <ion-card-subtitle>{{provincia}}</ion-card-subtitle>
+        <ion-card-title>{{titulo}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        {{parroquiaEnviada.descripcion}}
+        {{descripcion}}
       </ion-card-content>
     </ion-card>
   </ion-content>

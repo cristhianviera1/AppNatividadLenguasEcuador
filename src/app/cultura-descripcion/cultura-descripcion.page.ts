@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ParroquiaModel } from './../models/ParroquiaModel';
+import { DataApiService } from './../services/data-api.service';
+
 
 
 @Component({
@@ -9,18 +11,23 @@ import { ParroquiaModel } from './../models/ParroquiaModel';
   styleUrls: ['./cultura-descripcion.page.scss'],
 })
 export class CulturaDescripcionPage implements OnInit {
-
-  parroquia: ParroquiaModel = new ParroquiaModel();
-  parroquiaEnviada: ParroquiaModel;
-
-  constructor(private activedRoute: ActivatedRoute, private route: Router) { }
+  idPublicacion: string
+  public titulo;
+  public provincia;
+  public imagen;
+  public descripcion;
+  constructor(private activedRoute: ActivatedRoute, private route: Router, private ApiService: DataApiService) { }
 
   ngOnInit() {
-    this.parroquiaEnviada = JSON.parse(this.activedRoute.snapshot.params.parroquia);
-    console.log(this.parroquiaEnviada);
-    // this.parroquia = new ParroquiaModel(JSON.parse(this.activedRoute.snapshot.params.parroquia));
-  }
+    this.idPublicacion = this.activedRoute.snapshot.params.publicacion;
+    this.ApiService.getOneCultura(this.idPublicacion).subscribe(Response => {
+      this.titulo = Response.titulo;
+      this.provincia = Response.provincia;
+      this.imagen = Response.imagen;
+      this.descripcion = Response.descripcion
 
+    })
+  }
   regresar() {
     this.route.navigate(['/culturas']);
   }

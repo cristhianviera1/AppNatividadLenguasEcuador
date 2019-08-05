@@ -21,7 +21,7 @@
     <ion-item>
       <ion-icon name="logo-freebsd-devil" slot="start"></ion-icon>
       <ion-label>{{cultura.titulo}}</ion-label>
-      <ion-button fill="outline" slot="end">Mas..</ion-button>
+      <ion-button fill="outline" (click)="enviarParametros(cultura.id)" slot="end">Mas..</ion-button>
     </ion-item>
     <img src="{{cultura.imagen}}" />
 

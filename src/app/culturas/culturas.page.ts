@@ -39,11 +39,9 @@ export class CulturasPage implements OnInit {
     const texto = event.target.value;
     this.textoBuscar = texto;
     console.log(texto);
-  }
-  */
-  /*enviarParametros(parroquia: ParroquiaModel) {
-    this.route.navigate(['/cultura-descripcion', {parroquia: JSON.stringify(parroquia)}])
-  }
-  */
+  }*/
 
+  enviarParametros(idPublicacion) {
+    this.route.navigate(['/cultura-descripcion', {publicacion: idPublicacion}])
+  }
 }

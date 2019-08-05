@@ -5,7 +5,10 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-button fill="outline" size="small" (click)="regresar()">
+    <ion-icon slot="start" name="arrow-back"></ion-icon>
+    Regresar
+  </ion-button>
   <img src="../../assets/img/Logolenguas.png">
   <form [formGroup]="myForm">
     <ion-item>
