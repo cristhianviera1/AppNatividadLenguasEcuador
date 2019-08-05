@@ -41,7 +41,7 @@ export class RegisterPage implements OnInit {
         }).then(alert => {
           alert.present();
         });
-        this.router.navigate(['/login']);
+        this.router.navigate(['/culturas']);
         this.menu.enable(true);
       }).catch(err => {
         this.alert.create({
