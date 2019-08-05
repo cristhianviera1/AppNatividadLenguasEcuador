@@ -29,6 +29,11 @@
       </ion-footer>
     </ion-menu>
     <script src="/assets/simpleHeat/simpleheat.js"></script>
-    <ion-router-outlet main></ion-router-outlet>
+
+      <ion-router-outlet main>
+        <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+          <p style="font-size: 20px; color: white">Cargando...</p>
+        </ngx-spinner>
+      </ion-router-outlet>
   </ion-split-pane>
 </ion-app>

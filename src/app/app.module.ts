@@ -17,6 +17,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ModalPageModule } from './modal/modal.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ModalPageModule } from './modal/modal.module';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    ModalPageModule
+    ModalPageModule,
+    NgxSpinnerModule
   ],
   providers: [
     AngularFireAuth,
