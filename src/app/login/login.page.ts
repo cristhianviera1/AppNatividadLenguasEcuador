@@ -35,7 +35,7 @@ export class LoginPage implements OnInit {
     this.authService.login(this.myForm.value.email, this.myForm.value.password).then(res => {
       //this.userName=res.user.email;
       this.menu.enable(true);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/culturas']);
     }).catch(err => {
       this.menu.enable(false);
       alert("Los datos ingresados son incorrectos o no existen.")
@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
   onLoginGoogle(): void {
     this.authService.loginGoogleUser()
       .then((res) => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/culturas']);
       }).catch(err => console.log('err', err.message));
   }
   onLoginFacebook(): void {
@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
     this.authService.logoutUser();
   }
   onLoginRedirect(): void {
-    this.router.navigate(['home']);
+    this.router.navigate(['culturas']);
   }
 
   registro() {

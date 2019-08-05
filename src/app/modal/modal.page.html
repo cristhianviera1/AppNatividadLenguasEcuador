@@ -22,16 +22,38 @@
         <ion-label position="floating">Provincia:</ion-label>
         <ion-input type="text" name="provincia" placeholder="Ingresa la provincia" [(ngModel)]="provincia"></ion-input>
       </ion-item>
-      <ion-item>
-
-        <ion-item>
-          <ion-label position="floating">Descripción</ion-label>
-          <ion-textarea rows="6" cols="40" name="descripcion" [(ngModel)]="descripcion"
-            placeholder="Ingresa la descripcion...">
-          </ion-textarea>
-        </ion-item>
-
-      </ion-item>
+      <ion-list>
+          <ion-list-header>Seleccione una Provincia: </ion-list-header>
+        
+          <ion-item>
+            <ion-select [interfaceOptions]="customAlertOptions" interface="alert" placeholder="provincia">
+                <ion-select-option value="Bolívar">Bolívar</ion-select-option>
+                <ion-select-option value="Cañar">Cañar</ion-select-option>
+                <ion-select-option value="Carchi">Carchi</ion-select-option>
+                <ion-select-option value="Chimborazo">Chimborazo</ion-select-option>
+                <ion-select-option value="Cotopaxi">Cotopaxi</ion-select-option>
+                <ion-select-option value="El Oro">El Oro</ion-select-option>
+                <ion-select-option value="Esmeraldas">Esmeraldas</ion-select-option>
+                <ion-select-option value="Galápagos">Galápagos</ion-select-option>
+                <ion-select-option value="Guayas">Guayas</ion-select-option>
+                <ion-select-option value="Imbabura">Imbabura</ion-select-option>
+                <ion-select-option value="Loja">Loja</ion-select-option>
+                <ion-select-option value="Los Ríos">Los Ríos</ion-select-option>
+                <ion-select-option value="Manabí">Manabí</ion-select-option>
+                <ion-select-option value="Morona Santiago">Morona Santiago</ion-select-option>
+                <ion-select-option value="Napo">Napo</ion-select-option>
+                <ion-select-option value="Orellana">Orellana</ion-select-option>
+                <ion-select-option value="Pastaza">Pastaza</ion-select-option>
+                <ion-select-option value="Pichincha">Pichincha</ion-select-option>
+                <ion-select-option value="Santa Elena">Santa Elena</ion-select-option>
+                <ion-select-option value="Santo Domingo">Santo Domingo de los Tsáchilas</ion-select-option>
+                <ion-select-option value="Sucumbíos">Sucumbíos</ion-select-option>
+                <ion-select-option value="Tungurahua">Tungurahua</ion-select-option>
+                <ion-select-option value="Zamora Chinchipe">Zamora Chinchipe</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+        </ion-list>
       <ion-item>
         <ion-label position="floating">Subir Imagen:</ion-label>
         <ion-input type="file" accept=".png, .jpg" (change)="onUpload($event)"></ion-input>

@@ -27,10 +27,7 @@ const routes: Routes = [
   },
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'modal', loadChildren: './modal/modal.module#ModalPageModule' }
-
-
-
-
+  
 ];
 
 @NgModule({
