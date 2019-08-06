@@ -1,6 +1,5 @@
 import { LenguaNativaModel } from './LenguaNativaModel';
 import { ProvinciaModel } from './ProvinciaModel';
-
 export class ParroquiaModel {
     id: number;
     nombreParroquia: string;

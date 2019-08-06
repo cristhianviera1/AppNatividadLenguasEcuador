@@ -22,13 +22,13 @@ export class DataApiService {
   getAllCulturas() {
     this.culturasCollection = this.afs.collection<CulturaInterface>('culturas');
     return this.culturas = this.culturasCollection.snapshotChanges()
-    .pipe(map(changes => {
-      return changes.map(action => {
-        const data = action.payload.doc.data() as CulturaInterface;
-        data.id = action.payload.doc.id;
-        return data;
-      });
-    }));
+      .pipe(map(changes => {
+        return changes.map(action => {
+          const data = action.payload.doc.data() as CulturaInterface;
+          data.id = action.payload.doc.id;
+          return data;
+        });
+      }));
   }
 
   getOneCultura(idCultura: string) {
@@ -46,6 +46,12 @@ export class DataApiService {
 
   addCultura(cultura: CulturaInterface) {
     this.culturasCollection.add(cultura);
+  }
+  searchCulturas() {
+    this.culturaDoc.collection('culturas').valueChanges()
+      .subscribe(culturas => {
+        return culturas
+      });
   }
 
   updateCultura(cultura: CulturaInterface) {
