@@ -18,7 +18,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ModalPageModule } from './modal/modal.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { FCMOriginal, } from '@ionic-native/fcm';
+import {  FCM } from '@ionic-native/fcm/ngx';
 
 
 @NgModule({
@@ -39,7 +39,7 @@ import { FCMOriginal, } from '@ionic-native/fcm';
   providers: [
     AngularFireAuth,
     AngularFirestore,
-    FCMOriginal,
+    FCM,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

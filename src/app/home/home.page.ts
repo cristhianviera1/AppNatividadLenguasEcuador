@@ -219,6 +219,7 @@ export class HomePage {
     this.http.get('assets/shapeFiles/ecuador.json').subscribe((json: any) => {
       var ecuador = L.geoJson(json, {
         onEachFeature: function (feature, layer) {
+          
           layer.bindPopup(feature.properties.dpa_despro);
           layer.on('mouseover', function (e) {
             this.openPopup();

@@ -7,7 +7,7 @@ import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MenuController } from '@ionic/angular';
-import { FCMOriginal, NotificationData } from '@ionic-native/fcm';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authService: AuthService, private platform: Platform, private splashScreen: SplashScreen, private statusBar: StatusBar,
-    public router: Router, public menu: MenuController, private spinnerService: NgxSpinnerService,private fcm: FCMOriginal) {
+    public router: Router, public menu: MenuController, private spinnerService: NgxSpinnerService,private fcm: FCM) {
     this.initializeApp();
   }
 
