@@ -26,7 +26,6 @@ export class CulturasPage implements OnInit {
     this.ApiService.getAllCulturas().subscribe(culturas => {
       this.prev = culturas;
       this.culturas = culturas;
-
     })
   }
 

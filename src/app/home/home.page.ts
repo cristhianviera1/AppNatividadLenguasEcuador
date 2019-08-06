@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { DataApiService } from './../services/data-api.service';
 import *  as L from 'leaflet';
 import 'leaflet.heat/src/HeatLayer.js';
 import 'leaflet.timeline'
@@ -13,17 +14,13 @@ import 'simpleheat/simpleheat.js'
 })
 export class HomePage {
   public map: L.Map;
+  private culturas = [];
   comunidades: Array<any>;
   lenguasJson: any;
-
   OpenStreetMaps: L.tileLayer;
-  public capasCalor: any;
   numerosPreguntas: Array<string>
-
-  /**
-   * capasCalor contendrá a todas las capas
-   */
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private ApiService: DataApiService) {
     this.OpenStreetMaps = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
       maxZoom: 18,
@@ -33,8 +30,12 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
+    this.ApiService.getAllCulturas().subscribe(culturas => {
+      this.culturas = culturas;
+    });
     this.loadmap();
     this.getComunidadesShape();
+    this.capaPopup();
   }
 
   /**Dibuja el mapa con capa de OpenStreetMap */
@@ -160,12 +161,14 @@ export class HomePage {
       for (let numP in numPregunta) {
         var LatLngIntensity = []
 
-        heatMapLayers[numPregunta[numP]] = L.heatLayer(LatLngIntensity, { gradient: {
-          0.1: 'green',
-          0.2: 'yellow',
-          0.3: 'red'
-        }, radius: 120 }).addTo(map)
-        
+        heatMapLayers[numPregunta[numP]] = L.heatLayer(LatLngIntensity, {
+          gradient: {
+            0.1: 'green',
+            0.2: 'yellow',
+            0.3: 'red'
+          }, radius: 120
+        }).addTo(map)
+
         //Recorre cada Parroquia
         for (let parr in comunidades) {
           if (comunidades[parr].properties.LENGUA_L1 == layerName) {
@@ -175,7 +178,6 @@ export class HomePage {
             var numPersonas = parseInt(comunidades[parr].properties.TOTAL_ENC);
             var lenUno: number;
             var result = ((lenUno * 1) / numPersonas);
-
             //Recorre cada propiedad de la parroquia
             for (let forms in comunidades[parr].properties) {
               if (forms.slice(-2) == numPregunta[numP]) {
@@ -192,7 +194,6 @@ export class HomePage {
         }
       }
     }
-
     L.control.timelineSlider({
       timelineItems: ["Abuelos", "Padres", "Encuestado", "Hijos"],
       changeMap: function (e) {
@@ -210,15 +211,31 @@ export class HomePage {
             }
           }
         }
-        /*if(e.label=="Padres"){
-          heatMapLayers[numPregunta[numP]].addTo(map);
-        }*/
-        console.log(e);
       }
     }).addTo(map)
   }
-  /*control() {
-    /**Control de slider por generación */
-  //}
+  capaPopup() {
+    var map = this.map
+    this.http.get('assets/shapeFiles/ecuador.json').subscribe((json: any) => {
+      var ecuador = L.geoJson(json, {
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup(feature.properties.dpa_despro);
+          layer.on('mouseover', function (e) {
+            this.openPopup();
+          });
+          layer.on('mouseout', function (e) {
+            this.closePopup();
+          });
+        },
+        style: function (layer) {
+          return {
+            fillOpacity: 0.3,
+            color: '#055',
+            weight: 1
+          }
+        }
+      })
+      ecuador.addTo(this.map);
+    });
+  }
 }
-//COMPLETE 200 Ptos Prros OPRESORES >:v
