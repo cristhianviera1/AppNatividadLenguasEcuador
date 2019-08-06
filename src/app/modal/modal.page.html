@@ -17,11 +17,7 @@
         <ion-input type="text" name="titulo" placeholder="Ingresa el titulo de tu publicacion" [(ngModel)]="titulo">
         </ion-input>
       </ion-item>
-      <ion-item>
 
-        <ion-label position="floating">Provincia:</ion-label>
-        <ion-input type="text" name="provincia" placeholder="Ingresa la provincia" [(ngModel)]="provincia"></ion-input>
-      </ion-item>
       <ion-list>
           <ion-list-header>Seleccione una Provincia: </ion-list-header>
         
@@ -43,15 +39,20 @@
                 <ion-select-option value="Morona Santiago">Morona Santiago</ion-select-option>
                 <ion-select-option value="Napo">Napo</ion-select-option>
                 <ion-select-option value="Orellana">Orellana</ion-select-option>
-                <ion-select-option value="Pastaza">Pastaza</ion-select-option>
-                <ion-select-option value="Pichincha">Pichincha</ion-select-option>
-                <ion-select-option value="Santa Elena">Santa Elena</ion-select-option>
-                <ion-select-option value="Santo Domingo">Santo Domingo de los Tsáchilas</ion-select-option>
-                <ion-select-option value="Sucumbíos">Sucumbíos</ion-select-option>
-                <ion-select-option value="Tungurahua">Tungurahua</ion-select-option>
-                <ion-select-option value="Zamora Chinchipe">Zamora Chinchipe</ion-select-option>
+                <ion-select-option value="Pa">Pastaza</ion-select-option>
+                <ion-select-option value="black">Pichincha</ion-select-option>
+                <ion-select-option value="red">Santa Elena</ion-select-option>
+                <ion-select-option value="brown">Santo Domingo de los Tsáchilas</ion-select-option>
+                <ion-select-option value="blonde">Sucumbíos</ion-select-option>
+                <ion-select-option value="black">Tungurahua</ion-select-option>
+                <ion-select-option value="red">Zamora Chinchipe</ion-select-option>
             </ion-select>
           </ion-item>
+          <ion-item>
+          <ion-label position="floating">Descripción</ion-label>
+        <ion-textarea rows="6" cols="40" name="descripcion" [(ngModel)]="descripcion" placeholder="Ingresa la descripcion...">
+        </ion-textarea>
+      </ion-item>
   
         </ion-list>
       <ion-item>
