@@ -18,6 +18,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ModalPageModule } from './modal/modal.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import {FCM} from '@ionic-native/fcm';
 
 
 @NgModule({

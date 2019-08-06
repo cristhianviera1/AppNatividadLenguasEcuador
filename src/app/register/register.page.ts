@@ -39,9 +39,9 @@ export class RegisterPage implements OnInit {
     this.authService.registerUser(this.myForm.value.email, this.myForm.value.password)
       .then(res => {
         this.alert.create({
-          header: 'Registrado exitósamente',
-          message: 'Bienvenido a la comunidad MMV',
-          buttons: ['ok :v']
+          header: 'Registrado exitosamente',
+          message: 'Bienvenido a la comunidad :)',
+          buttons: ['Aceptar']
         }).then(alert => {
           alert.present();
         });
@@ -51,7 +51,7 @@ export class RegisterPage implements OnInit {
         this.alert.create({
           header: 'Ha fallado el registro',
           message: 'Revise los campos campos',
-          buttons: ['alv prro']
+          buttons: ['Aceptar']
         }).then(alert => {
           alert.present();
         });

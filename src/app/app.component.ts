@@ -16,7 +16,7 @@ import { MenuController } from '@ionic/angular';
 export class AppComponent implements OnInit {
   public appPages = [
     {
-      title: 'Inicio',
+      title: 'Mapa de Calor',
       url: '/home',
       icon: 'ios-compass'
     },
