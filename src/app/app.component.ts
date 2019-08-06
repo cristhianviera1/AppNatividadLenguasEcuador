@@ -7,6 +7,7 @@ import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MenuController } from '@ionic/angular';
+import { FCMOriginal, NotificationData } from '@ionic-native/fcm';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authService: AuthService, private platform: Platform, private splashScreen: SplashScreen, private statusBar: StatusBar,
-    public router: Router, public menu: MenuController, private spinnerService: NgxSpinnerService) {
+    public router: Router, public menu: MenuController, private spinnerService: NgxSpinnerService,private fcm: FCMOriginal) {
     this.initializeApp();
   }
 
@@ -59,6 +60,32 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.fcm.getToken().then(
+        (token: string) => {
+          console.log("Este es el token para este dispositivo: " + token);
+        }
+      ).catch(error =>{
+        console.log(error);
+      });
+
+this.fcm.onTokenRefresh().subscribe((token: string) => {
+  console.log("Actualizacion de token: " + token);
+});
+
+this.fcm.onNotification().subscribe( data => {
+  if(data.wasTapped) {
+    // Aplicación en segundo plano
+    console.log("Estamos en segundo plano  " + JSON.stringify(data));
+
+  } else {
+// Aplicación en primer plano
+console.log("Estamos en primer plano  " + JSON.stringify(data));
+  }
+
+}, error =>{
+ console.log("error error"  + error);
+});
+
     });
   }
 }
