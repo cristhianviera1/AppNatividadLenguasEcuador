@@ -50,7 +50,7 @@ export class RegisterPage implements OnInit {
       }).catch(err => {
         this.alert.create({
           header: 'Ha fallado el registro',
-          message: 'Revise los campos campos',
+          message: 'Revise los campos',
           buttons: ['Aceptar']
         }).then(alert => {
           alert.present();
