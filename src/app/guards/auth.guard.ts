@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
 
       return this.AFauth.authState.pipe(map( auth => {
         if(isNullOrUndefined(auth)){
-          this.route.navigate(['/culturas']);
+          this.route.navigate(['/recursos']);
           return false;
         }else{
           return true;

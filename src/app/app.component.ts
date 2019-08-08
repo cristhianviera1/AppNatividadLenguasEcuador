@@ -17,20 +17,22 @@ import { FCM } from '@ionic-native/fcm/ngx';
 export class AppComponent implements OnInit {
   public appPages = [
     {
-      title: 'Mapa de Calor',
-      url: '/home',
-      icon: 'ios-compass'
+      title: 'Inicio',
+      url: '/recursos',
+      icon: 'ios-home'
     },
+   
     {
       title: 'Culturas',
       url: '/culturas',
       icon: 'md-bonfire'
     },
     {
-      title: 'Perfil',
-      url: '/recursos',
-      icon: 'ios-contact'
+      title: 'Mapa de Calor',
+      url: '/home',
+      icon: 'ios-compass'
     }
+    
   ];
 
   constructor(

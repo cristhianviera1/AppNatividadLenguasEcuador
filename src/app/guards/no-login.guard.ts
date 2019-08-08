@@ -21,7 +21,7 @@ export class NoLoginGuard implements CanActivate {
       if (isNullOrUndefined(auth)) {
         return true;
       } else {
-        this.route.navigate(['/culturas']);
+        this.route.navigate(['/recursos']);
         return false;
       }
     }))

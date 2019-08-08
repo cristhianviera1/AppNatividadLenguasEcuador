@@ -14,7 +14,6 @@ constructor(private route: Router){}
   ngOnInit() {
    
   }
-  regresar() {
-    this.route.navigate(['/login']);
-  }
+
+  
 }

@@ -32,7 +32,7 @@ export class RegisterPage implements OnInit {
     this.menu.enable(false)
   }
   regresar() {
-    this.route.navigate(['/login']);
+    this.route.navigate(['/recursos']);
   }
   add() {
 
@@ -45,7 +45,7 @@ export class RegisterPage implements OnInit {
         }).then(alert => {
           alert.present();
         });
-        this.router.navigate(['/culturas']);
+        this.router.navigate(['/recursos']);
         this.menu.enable(true);
       }).catch(err => {
         this.alert.create({
