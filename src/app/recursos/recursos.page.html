@@ -1,25 +1,65 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Ayllu Llakta
-      <img class="alineado" height="50" src="../../assets/img/Logolenguas.png">
-    </ion-title>
-  </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
- <ion-card>
-    <ion-item (click)="testClick()">
-        <ion-avatar slot="start">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-        </ion-avatar>
-        <ion-label>
-          Avatar Start, Button Item
-        </ion-label>
-      </ion-item>
+    <ion-button fill="outline" size="small" (click)="regresar()">
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+        Regresar
+      </ion-button>
+  <ion-slides>
+    <ion-slide>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Destination</ion-card-subtitle>
+          <ion-card-title>Madison, WI</ion-card-title>
+        </ion-card-header>
       
- </ion-card>
+        <ion-card-content>
+          Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Mapa de Calor Generacional</ion-card-title>
+        </ion-card-header>
+        <ion-card-content text-left>
+Modo de uso: 
+<img class="iconLogin" src="../../assets/img/mapa.gif">
+
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+        <ion-card>
+          <ion-card-header>
+              <ion-card-subtitle>Introducción</ion-card-subtitle>
+            <ion-card-title>¿Quienes Son?</ion-card-title>
+          </ion-card-header>
+          <img class="iconLogin" src="../../assets/img/quienes somos.jpg">
+          <ion-card-content class="ion-text-justify">
+            <b>Ayllu Llakta</b>
+            <br>
+            Somos un grupo de desarrolladores con un objetivo en común que es tambien el objetivo
+            de esta aplicación, y es el de concientizar sobre la importancia de conservar las lenguas nativas 
+            y junto con ellas todo el conocimiento y sabiduria ancestral que en conjunto es nuestra cultura y todo lo que nos define
+            mostrando la decadencia de las mismas mediante un mapa de calor y un slider que
+            nos indica la decadencia de las lenguas por su generación se busca en generar una comunidad interesada en preservar estor valiosos saberes y compartirlos para todo el mundo.
+            <br>
+            <br>
+            <div text-left>
+            <b>Desarrolladores:</b>
+            <br>
+            - Jose Aguirre ( GitHub: https://github.com/JosseAguirre )
+            <br>
+            - Alanys Rojas ( GitHub: https://github.com/AlanysRojas )
+            <br>
+            - Gabriel Viera ( GitHub: https://github.com/cristhianviera1 )
+          </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+  </ion-slides>
 </ion-content>

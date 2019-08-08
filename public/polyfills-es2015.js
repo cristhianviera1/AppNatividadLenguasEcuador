@@ -6158,8 +6158,13 @@ window.__Zone_disable_customElements = true;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
+__webpack_require__(/*! C:\Users\Aly\Desktop\Proyecto Integrador\AppNatividadLenguasEcuador\src\polyfills.ts */"./src/polyfills.ts");
+module.exports = __webpack_require__(/*! C:\Users\Aly\Desktop\Proyecto Integrador\AppNatividadLenguasEcuador\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\jit-polyfills.js */"./node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/jit-polyfills.js");
+=======
 __webpack_require__(/*! C:\Users\Josse\Documents\Cuarto semestre\Projecto Lengua ancestral\AppNatividadLenguasEcuador\src\polyfills.ts */"./src/polyfills.ts");
 module.exports = __webpack_require__(/*! C:\Users\Josse\Documents\Cuarto semestre\Projecto Lengua ancestral\AppNatividadLenguasEcuador\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\jit-polyfills.js */"./node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/jit-polyfills.js");
+>>>>>>> 3bb3ac2feabb2aea69f454f74acbfe94c54182b1
 
 
 /***/ })

@@ -35,7 +35,7 @@ export class HomePage {
     });
     this.loadmap();
     this.getComunidadesShape();
-    this.capaPopup();
+    //sthis.capaPopup();
   }
 
   /**Dibuja el mapa con capa de OpenStreetMap */
@@ -214,7 +214,7 @@ export class HomePage {
       }
     }).addTo(map)
   }
-  capaPopup() {
+  /*capaPopup() {
     var map = this.map
     this.http.get('assets/shapeFiles/ecuador.json').subscribe((json: any) => {
       var ecuador = L.geoJson(json, {
@@ -238,5 +238,5 @@ export class HomePage {
       })
       ecuador.addTo(this.map);
     });
-  }
+  }*/
 }

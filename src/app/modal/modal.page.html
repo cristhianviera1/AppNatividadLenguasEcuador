@@ -55,10 +55,14 @@
       </ion-item>
   
         </ion-list>
-      <ion-item>
+        <label class="file">
+          <ion-input type="file" accept=".png, .jpg" id="file" (change)="onUpload($event)"></ion-input>
+          <span class="file-custom"></span>
+        </label>
+      <!--ion-item>
         <ion-label position="floating">Subir Imagen:</ion-label>
         <ion-input type="file" accept=".png, .jpg" (change)="onUpload($event)"></ion-input>
-      </ion-item>
+      </ion-item-->
 
       <ion-input type="hidden" [value]="urlImage | async" name="imagen" [(ngModel)]="imagen"></ion-input>
 
