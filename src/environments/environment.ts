@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyCzi2LrvFnUYo_oKhwcBGsucht_DfKc0nM",
-    authDomain: "natividad-de-lenguas.firebaseapp.com",
-    databaseURL: "https://natividad-de-lenguas.firebaseio.com",
-    projectId: "natividad-de-lenguas",
-    storageBucket: "natividad-de-lenguas.appspot.com",
-    messagingSenderId: "979706024262",
-    appId: "1:979706024262:web:7020174259dad321"
+    apiKey: "AIzaSyBHPAmaTVaiMVjLErXHfkWkvulea7wFFLo",
+    authDomain: "lenguas-nativas.firebaseapp.com",
+    databaseURL: "https://lenguas-nativas.firebaseio.com",
+    projectId: "lenguas-nativas",
+    storageBucket: "lenguas-nativas.appspot.com",
+    messagingSenderId: "203783632370",
+    appId: "1:203783632370:web:bb8b70b9bdd48321"
   },
   comunidadesPath: "http://www.google.com",
   API_URL: "http://192.168.100.149:8000"
