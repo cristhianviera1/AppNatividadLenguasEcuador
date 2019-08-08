@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginPage }from '../login/login.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recursos',
@@ -8,10 +8,13 @@ import { LoginPage }from '../login/login.page';
 })
 export class RecursosPage implements OnInit {
 
+constructor(private route: Router){}
 
-  constructor(private login:LoginPage) {}
 
   ngOnInit() {
-    console.log(this.login);
+   
+  }
+  regresar() {
+    this.route.navigate(['/login']);
   }
 }
