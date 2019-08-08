@@ -32,7 +32,7 @@ export class RegisterPage implements OnInit {
     this.menu.enable(false)
   }
   regresar() {
-    this.route.navigate(['/recursos']);
+    this.route.navigate(['/login']);
   }
   add() {
 
